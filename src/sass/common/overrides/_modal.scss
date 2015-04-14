@@ -1,0 +1,25 @@
+.modal-header {
+  border-bottom: none;
+  padding: 30px 30px 20px 30px;
+
+  .modal-title {
+    font-weight: 700;
+    font-size: 100%;
+  }
+}
+
+.modal-body {
+  padding: 0px 30px;
+  font-size: 90%;
+}
+
+.modal-footer {
+  border-top: none;
+  padding: 20px 30px 30px 30px;
+  text-align: left;
+  margin: 0px;
+}
+
+.modal-backdrop {
+  height: 10000px;
+}
