@@ -18,15 +18,32 @@
         return $window.moment;
     });
 
-    angular.module('cf.ui', []);
+    angular.module('cf.events', []);
 
-    angular.module('cf.service', []);
+    angular.module('cf.ui', [
+            'cf.events',
+            'jquery',
+            'd3',
+            'moment',
+            'underscore',
+            'ui.bootstrap'
+    ]);
 
-    angular.module('cf.filter', []);
+    angular.module('cf.services', [
+            'cf.events',
+            'underscore',
+            'jquery'
+    ]);
+
+    angular.module('cf.filters', ['underscore']);
 
     angular.module('cf', [
-            "cf.ui",
-            "cf.service",
-            "cf.filter"
+            'cf.events',
+            'cf.ui',
+            'cf.services',
+            'cf.filters',
+
+            'ngRoute',
+            'ngAnimate'
     ]);
 }());
