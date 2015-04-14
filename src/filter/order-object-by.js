@@ -7,7 +7,7 @@ angular.module('cf.filters').filter('orderObjectBy', function() {
             filtered.push(item);
         });
         filtered.sort(function(a, b) {
-            return reverse ? a[field] > b[field] : a[field] < b[field];
+            return reverse ? (a[field] > b[field]) : (a[field] < b[field]);
         });
         return filtered;
     };

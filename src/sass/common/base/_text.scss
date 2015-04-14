@@ -1,0 +1,45 @@
+.cf-m-huge-text {
+  font-size: 400%;
+  vertical-align: baseline;
+}
+
+.cf-m-red-head {
+  color: $red;
+  font-weight: 400;
+  text-shadow: 0 1px 0 $white;
+}
+
+// Inline text next to buttons
+.cf-btn-text {
+  margin: 0 10px 0 0;
+}
+
+.cf-m-field-head {
+  color: $color-table-header;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+.cf-m-code,
+.cf-m-code-box {
+  background-color: #F9F2F4;
+  color: #C7254E;
+  font-family: $font-family-code;
+}
+
+.cf-m-code-box {
+  min-height: 300px;
+  font-size: 12px;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+.cf-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cf-nowrap {
+  white-space: nowrap;
+}

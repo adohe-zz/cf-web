@@ -23,6 +23,6 @@ angular.module('cf.services').provider('configSvc', function() {
             set: function(key, value) {
                 configValues[key] = value;
             }
-        }
+        };
     }
 });

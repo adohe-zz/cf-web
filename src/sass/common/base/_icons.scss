@@ -1,0 +1,39 @@
+.cf-img-icon {
+  position: relative;
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.cf-img-icon > svg {
+  @include translateY(-50%);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 24px;
+  height: 24px;
+}
+
+.cf-img-icon-light {
+  fill: $color-icon-light;
+  color: $color-icon-light;
+}
+
+.cf-img-icon-dark {
+  fill: $color-icon-dark;
+  color: $color-icon-dark;
+}
+
+.cf-img-icon-gray {
+  fill: $color-icon-gray;
+  color: $color-icon-gray;
+}
+
+.cf-m-icon-inline {
+  vertical-align: middle;
+  margin-right: 2px;
+}
