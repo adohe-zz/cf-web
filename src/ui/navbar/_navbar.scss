@@ -1,0 +1,15 @@
+.cf-m-navbar {
+  background-color: $color-bg-primary;
+  margin: 0;
+  padding-left: 10px;
+}
+
+.cf-m-navbar__logo {
+  width: 129px;
+  height: 30px;
+  line-height: 64px;
+}
+
+.cf-m-navbar--right-dropdown:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,8 @@
+@include sticky-footer($height-footer, '#cf-l-footer-wrapper', '#cf-l-footer-push', '#cf-l-footer');
+
+#cf-l-footer {
+  background-color: $color-bg-primary;
+  margin: 0;
+  min-height: $height-footer;
+  overflow: hidden;
+}
