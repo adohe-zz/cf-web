@@ -1,0 +1,7 @@
+<div class="cf-m-toast">
+  <div ng-repeat="message in messages"
+      class="cf-m-toast__message cf-m-message cf-m-message--{{message.type}} cf-an-fade-in-out cf-fx-box-shadow">
+    {{message.text}}
+    <span ng-click="dismiss($index)" class="pull-right glyphicon glyphicon-remove text-right cf-m-message__close"></span>
+  </div>
+</div>
