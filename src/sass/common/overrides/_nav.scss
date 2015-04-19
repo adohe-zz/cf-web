@@ -1,0 +1,24 @@
+.navbar {
+  min-height: 46px;
+  border: 0px;
+  border-radius: 0;
+}
+
+.navbar-nav > li > a {
+  line-height: 16px;
+}
+
+.navbar-brand {
+  padding: 0;
+  position: relative;
+  height: auto;
+}
+
+.navbar-toggle {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 8px;
+  .glyphicon-align-justify {
+    color: $color-header-toggle;
+  }
+}
