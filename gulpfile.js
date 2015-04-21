@@ -147,7 +147,6 @@ gulp.task('concat:css', ['sass'], function() {
 gulp.task('concat:js', ['templates'], function() {
   return gulp.src([
     'src/**/*.js',
-    '!src/**/*.test.js',
     'dist/*.js'
   ])
   .pipe(concat('cf.js'))
