@@ -1,0 +1,15 @@
+{
+  "name": "slb-dashboard",
+  "version": "1.0.0",
+  "description": "slb registry service dashboard",
+  "main": "app.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "keywords": [
+    "slb",
+    "dashboard"
+  ],
+  "author": "TonyAdo <coolhzb@163.com>",
+  "license": "MIT"
+}
