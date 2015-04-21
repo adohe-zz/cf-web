@@ -28,7 +28,7 @@
     "underscore": "latest",
     "underscore.string": "latest",
     "jquery": "latest",
-    "font-awesome": "~4.3.0",
+    "font-awesome": "~4.0.3",
     "moment": "latest"
   }
 }
