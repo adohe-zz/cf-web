@@ -1,10 +1,11 @@
-var express = require('express');
+var express = require('express'),
+    config = require('config');
 
 var app = express();
 var port = process.env.PORT || 8088;
 
 // Bootstrap application settings
-require('./config/express')(app);
+require('./config/express')(app, config);
 
 // Bootstrap routes
 require('./config/routes')(app);

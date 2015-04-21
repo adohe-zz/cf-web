@@ -7,7 +7,7 @@ var express = require('express'),
 
 var env = process.env.NODE_ENV || 'development';
 
-module.exports = function(app) {
+module.exports = function(app, config) {
 
     // Compression middleware (should be placed before express.static)
     app.use(compression({
@@ -15,7 +15,7 @@ module.exports = function(app) {
     }));
 
     // Static file middleware
-    app.use(express.static(__dirname + '/public')); 
+    app.use(express.static(config.root + '/public'));
 
     // Swig templating engine setting
     if(env === 'development' || env === 'test') {
@@ -26,7 +26,7 @@ module.exports = function(app) {
 
     // Set views path, template engine and default layout
     app.engine('html', swig.renderFile);
-    app.set('views', __dirname + '/app/views');
+    app.set('views', config.root + '/app/views');
     app.set('view engine', 'html');
 
     // bodyParser should be placed above methodOverride
