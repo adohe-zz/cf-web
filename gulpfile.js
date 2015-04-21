@@ -6,7 +6,6 @@ var gulp       = require('gulp'),
     merge      = require('merge-stream'),
     modRewrite = require('connect-modrewrite'),
     liveReload = require('connect-livereload'),
-    karma      = require('karma').server,
 
     runSequence = require('run-sequence'),
     rename     = require('gulp-rename'),
@@ -39,16 +38,6 @@ gulp.task('clean:postdist', function(cb) {
     'dist/templates-html.js',
     'dist/templates-svg.js'
   ], cb);
-});
-
-/**
- * Karma test
- */
-gulp.task('test:unit', ['templates'], function (cb) {
-  karma.start({
-    configFile: __dirname + '/karma.conf.js',
-    singleRun: true
-  }, cb);
 });
 
 /**
@@ -121,7 +110,7 @@ gulp.task('sass', function () {
       }))
       .pipe(gulp.dest('dist'));
 
-    return merge(coreOsStream, fontAwesomeStream, bootstrapStream);
+    return merge(cfStream, fontAwesomeStream, bootstrapStream);
 });
 
 /**
@@ -257,7 +246,7 @@ gulp.task('html2js:svg', function() {
 /**
  * Templates task (both html and svg)
  */
-gulp.task('templates', ['html2js:coreos', 'html2js:svg']);
+gulp.task('templates', ['html2js:cf', 'html2js:svg']);
 
 /**
  * Connect task
@@ -311,7 +300,7 @@ gulp.task('reload', function() {
 /**
  * Test task
  */
-gulp.task('test', ['lint', 'lint:tests', 'test:unit']);
+gulp.task('test', ['lint', 'lint:tests']);
 
 /**
  * Version task
