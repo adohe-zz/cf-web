@@ -1,9 +1,37 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>test</title>
+<html lang="en" class="no-js" ng-app="slb.dashboard">
+
+  <head cf-favicons>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title cf-title cf-title-suffix=" · slb">slb</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/main.css">
   </head>
-  <body>
-    <p>beep boop</p>
+
+  <body class="cf-img-bg-hexagons">
+
+    <cf-footer-wrapper ng-cloak>
+      <cf-navbar>
+        <ul class="nav navbar-nav">
+          <cf-navbar-link href="/dashboard/service">Service</cf-navbar-link>
+          <cf-navbar-link href="/dashboard/instances">Instances</cf-navbar-link>
+        </ul>
+      </cf-navbar>
+      <div id="cf-l-view-container" class="container" ng-view></div>
+    </cf-footer-wrapper>
+
+    <cf-footer>
+      <cf-footer-link href="#" icon-class="fa fa-book">CF</cf-footer-link>
+      <cf-footer-link href="#" icon-class="fa fa-comment">@copyright 2015</cf-footer-link>
+    </cf-footer>
+
+    <cf-toast></cf-toast>
+
+    <script src="/javascripts/deps.js"></script>
+    <script src="/javascripts/app.js"></script>
+
   </body>
 </html>
