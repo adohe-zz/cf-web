@@ -1,0 +1,19 @@
+/* CF-WEB MODULES */
+
+// Configuration
+@import "color-pallette";
+@import "config";
+
+// Mixins
+@import "mixin/media-query";
+@import "mixin/keyframes";
+@import "mixin/animation";
+@import "mixin/custom-font";
+@import "mixin/prefix";
+
+
+/* SLB DASHBOARD MODULES */
+
+// Pages
+@import "page/service/service";
+@import "page/service/service-info";
