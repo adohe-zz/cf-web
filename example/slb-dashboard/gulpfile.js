@@ -4,7 +4,7 @@ var gulp = require('gulp'),
     runSequence = require('run-sequence'),
     del = require('del'),
     sass = require('gulp-sass'),
-    contact = require('gulp-contact');
+    concat = require('gulp-concat');
 
 // Clean task
 gulp.task('clean', function(cb) {
@@ -22,7 +22,7 @@ gulp.task('clean', function(cb) {
 gulp.task('sass', function() {
   var slbStream = gulp.src('app/main.scss')
         .pipe(sass({
-          includePaths: ['app/module', 'app/page'],
+          includePaths: ['app/cf-web/sass', 'app/cf-web/sass/mixin'],
           outputStyle: 'nested'
         }))
         .pipe(gulp.dest('public/stylesheets'));
@@ -33,22 +33,18 @@ gulp.task('sass', function() {
 /**
 * Contact CSS Task
 */
-gulp.task('contact:css', ['sass'], function(cb) {
+gulp.task('concat:css', ['sass'], function(cb) {
   return gulp.src('public/stylesheets/*.css')
-          .pipe(contact('index.css'))
+          .pipe(concat('main.css'))
           .pipe(gulp.dest('public/stylesheets'));
 });
 
-gulp.task('contact:js', function(cb) {
-
-});
-
-gulp.task('contact', ['contact:css', 'contact:js']);
+gulp.task('concat', ['concat:css']);
 
 /**
 * Compile all prod assets
 */
-gulp.task('compile:prod', ['contact', 'copy']);
+gulp.task('compile:prod', ['concat']);
 
 // Package task
 gulp.task('package', function(cb) {
@@ -56,8 +52,7 @@ gulp.task('package', function(cb) {
   runSequence(
     'clean',
     'compile:prod',
-    'clean:postdist'
-  );
+  cb);
 });
 
 // The default task (called when you run `gulp` from cli)

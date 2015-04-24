@@ -31,3 +31,4 @@ bower_components
 .bumpcfg
 
 dist/
+example/slb-dashboard/app/cf-web

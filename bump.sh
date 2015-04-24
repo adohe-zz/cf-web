@@ -19,4 +19,4 @@ echo "Using gulp"
 gulp
 
 echo "Copying assets from $DIST_PATH to $DEST_PATH"
-cp -r $DIST_PATH $DEST_PATH
+cp -r $DIST_PATH $DEST_PATH/cf-web
