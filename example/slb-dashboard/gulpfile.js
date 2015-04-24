@@ -58,9 +58,9 @@ gulp.task('concat:css', ['sass'], function(cb) {
 gulp.task('html2js:views', function() {
   return gulp.src(['app/page/**/*.html', 'app/ui/*.html', 'app/module/*.html'])
   .pipe(ngHtml2Js({
-    moduleName: 'slb-templates-html',
+    moduleName: 'templates-views',
     rename: function(moduleName) {
-      return '/slb.ui/' + moduleName;
+      return '/page/' + moduleName;
     }
   }))
   .pipe(concat('templates-html.js'))
@@ -87,8 +87,15 @@ gulp.task('concat:app', ['html2js:views'], function() {
 */
 gulp.task('concat:deps', function() {
     return gulp.src([
-      'bower_components/**/*.js',
-      'app/cf-web/cf.min.js'
+    'bower_components/jquery/dist/jquery.js',
+    'bower_components/angular/angular.js',
+    'bower_components/angular-route/angular-route.js',
+    'bower_components/angular-resource/angular-resource.js',
+    'bower_components/angular-animate/angular-animate.js',
+    'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+    'bower_components/underscore/underscore.js',
+    'bower_components/underscore.string/lib/underscore.string.js',
+    'app/cf-web/cf.min.js',
     ])
     .pipe(concat('deps.js'))
     .pipe(gulp.dest('public/javascripts'));

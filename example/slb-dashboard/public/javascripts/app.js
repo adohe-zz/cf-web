@@ -1,23 +1,23 @@
 (function(module) {
 try {
-  module = angular.module('slb-templates-html');
+  module = angular.module('templates-views');
 } catch (e) {
-  module = angular.module('slb-templates-html', []);
+  module = angular.module('templates-views', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('/slb.ui/instances/instances.html',
+  $templateCache.put('/page/instances/instances.html',
     '');
 }]);
 })();
 
 (function(module) {
 try {
-  module = angular.module('slb-templates-html');
+  module = angular.module('templates-views');
 } catch (e) {
-  module = angular.module('slb-templates-html', []);
+  module = angular.module('templates-views', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('/slb.ui/service/service-info.html',
+  $templateCache.put('/page/service/service-info.html',
     '<div class="ed-p-node-info">\n' +
     '\n' +
     '  <div class="modal-header">\n' +
@@ -52,12 +52,12 @@ module.run(['$templateCache', function($templateCache) {
 
 (function(module) {
 try {
-  module = angular.module('slb-templates-html');
+  module = angular.module('templates-views');
 } catch (e) {
-  module = angular.module('slb-templates-html', []);
+  module = angular.module('templates-views', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('/slb.ui/service/service.html',
+  $templateCache.put('/page/service/service.html',
     '<div class="ed-p-browser">\n' +
     '\n' +
     '  <cf-nav-title title="Browser">\n' +

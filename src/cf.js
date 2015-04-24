@@ -44,6 +44,6 @@
             'cf.filters',
 
             'ngRoute',
-            'ngAnimate'
+            'ngAnimate',
     ]);
 }());

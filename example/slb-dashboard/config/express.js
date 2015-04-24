@@ -26,7 +26,7 @@ module.exports = function(app, config) {
 
     // Set views path, template engine and default layout
     app.engine('html', swig.renderFile);
-    app.set('views', config.root + '/app');
+    app.set('views', config.root);
     app.set('view engine', 'html');
 
     // bodyParser should be placed above methodOverride

@@ -5,7 +5,7 @@
 
 
 
-angular.module('coreos.ui')
+angular.module('cf.ui')
 .directive('cfToast', function() {
   'use strict';
 
