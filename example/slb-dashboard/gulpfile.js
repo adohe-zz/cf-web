@@ -115,7 +115,7 @@ gulp.task('concat', ['concat:css', 'concat:js']);
 */
 gulp.task('copy:fonts', function() {
   return gulp.src('app/cf-web/fonts/*')
-    .pipe(gulp.dest('public/'));
+    .pipe(gulp.dest('public/fonts/'));
 });
 
 /**
@@ -123,7 +123,7 @@ gulp.task('copy:fonts', function() {
 */
 gulp.task('copy:images', function() {
   return gulp.src('app/cf-web/img/*')
-  .pipe(gulp.dest('public/'));
+  .pipe(gulp.dest('public/img/'));
 });
 
 /*

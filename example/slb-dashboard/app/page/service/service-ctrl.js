@@ -6,7 +6,7 @@ angular.module('slb.page')
   $scope.currPath = '/';
   $scope.currNode = null;
 
-  $scpoe.fetchService = function() {
+  $scope.fetchService = function() {
 
   };
 
@@ -17,9 +17,9 @@ angular.module('slb.page')
   $scope.rowClick = function() {
 
   };
-  
-  pollerSvc.register('servicePoller', {
+
+  /*pollerSvc.register('servicePoller', {
     fn: $scope.fetchService,
     scope: $scope
-  });
+  });*/
 });
