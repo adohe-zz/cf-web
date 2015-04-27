@@ -20,3 +20,5 @@ gulp
 
 echo "Copying assets from $DIST_PATH to $DEST_PATH"
 cp -r $DIST_PATH $DEST_PATH/cf-web
+echo "Removing dist folder"
+rm -rf $DIST_PATH

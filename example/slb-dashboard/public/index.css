@@ -5474,6 +5474,11 @@ svg .x-axis path {
 .cf-m-navbar--right-dropdown:hover {
   cursor: pointer; }
 
+.cf-m-navbar-link {
+  cursor: pointer;
+  font-size: 110%;
+  font-weight: 400; }
+
 .cf-m-nav-title {
   line-height: 60px; }
 

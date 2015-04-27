@@ -12,8 +12,7 @@ gulp.task('clean', function(cb) {
   del([
     '.tmp/**',
     '.sass-cache/**',
-    'public/javascrpts/**',
-    'public/stylesheets/*',
+    'public/**',
     'index.html'
   ], { force: true }, cb);
 });
@@ -48,7 +47,7 @@ gulp.task('sass', function() {
 gulp.task('concat:css', ['sass'], function(cb) {
   return gulp.src(['app/cf-web/cf.css', 'app/compiled/main.css'])
           .pipe(concat('index.css'))
-          .pipe(gulp.dest('public/stylesheets'));
+          .pipe(gulp.dest('public/'));
 });
 
 /**
@@ -79,7 +78,7 @@ gulp.task('concat:app', ['html2js:views'], function() {
       'app/ui/*.js'
     ])
     .pipe(concat('app.js'))
-    .pipe(gulp.dest('public/javascripts'));
+    .pipe(gulp.dest('public/'));
 });
 
 /*
@@ -98,7 +97,7 @@ gulp.task('concat:deps', function() {
     'app/cf-web/cf.min.js',
     ])
     .pipe(concat('deps.js'))
-    .pipe(gulp.dest('public/javascripts'));
+    .pipe(gulp.dest('public/'));
 });
 
 /**
@@ -116,7 +115,7 @@ gulp.task('concat', ['concat:css', 'concat:js']);
 */
 gulp.task('copy:fonts', function() {
   return gulp.src('app/cf-web/fonts/*')
-    .pipe(gulp.dest('public/cf-web/fonts'));
+    .pipe(gulp.dest('public/'));
 });
 
 /**
@@ -124,7 +123,7 @@ gulp.task('copy:fonts', function() {
 */
 gulp.task('copy:images', function() {
   return gulp.src('app/cf-web/img/*')
-  .pipe(gulp.dest('public/cf-web/img'));
+  .pipe(gulp.dest('public/'));
 });
 
 /*

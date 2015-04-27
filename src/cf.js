@@ -42,6 +42,8 @@
             'cf.ui',
             'cf.services',
             'cf.filters',
+            'cf-templates-html',
+            'cf-templates-svg',
 
             'ngRoute',
             'ngAnimate',

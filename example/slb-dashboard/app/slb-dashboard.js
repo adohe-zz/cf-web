@@ -75,15 +75,15 @@ slbDashboard.config(function($routeProvider, $locationProvider, $httpProvider,
 
 // After bootstrap initialization.
 .run(function($http, $rootScope, $location, $window, $route, _, configSvc,
-      toastSvc, CORE_EVENT) {
+      toastSvc, CF_EVENT) {
 
   // Show toast when poller fails.
-  $rootScope.$on(CORE_EVENT.POLL_ERROR, function() {
+  $rootScope.$on(CF_EVENT.POLL_ERROR, function() {
     toastSvc.error('Error polling for data.');
   });
 
   // Show toast for any non-suppressed http response errors.
-  $rootScope.$on(CORE_EVENT.RESP_ERROR, function(e, rejection) {
+  $rootScope.$on(CF_EVENT.RESP_ERROR, function(e, rejection) {
     var errorMsg = 'Request Error';
     if (rejection.data && rejection.data.message) {
       errorMsg = rejection.data.message;
@@ -92,7 +92,7 @@ slbDashboard.config(function($routeProvider, $locationProvider, $httpProvider,
   });
 
   // Redirect to 404 page if event is thrown.
-  $rootScope.$on(CORE_EVENT.PAGE_NOT_FOUND, function() {
+  $rootScope.$on(CF_EVENT.PAGE_NOT_FOUND, function() {
     $location.url(configSvc.get().siteBaseUrl + '/404');
   });
 
