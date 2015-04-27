@@ -7,4 +7,8 @@ module.exports = function(app) {
     app.get('/dashboard', function(req, res) {
         res.render('index');
     });
+
+    app.get('/dashboard/service', function(req, res) {
+      res.render('index');
+    });
 }
