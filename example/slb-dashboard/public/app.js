@@ -267,10 +267,10 @@ angular.module('slb.page')
 
   };
 
-  /*pollerSvc.register('servicePoller', {
+  pollerSvc.register('servicePoller', {
     fn: $scope.fetchService,
     scope: $scope
-  });*/
+  });
 });
 
 'use strict';
