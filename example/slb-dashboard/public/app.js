@@ -71,7 +71,7 @@ module.run(['$templateCache', function($templateCache) {
     '        <div class="row">\n' +
     '          <div class="col-lg-12 col-md-12 col-sm-12">\n' +
     '\n' +
-    '            <co-breadcrumb callback="breadcrumbCallback({path: path})" path="currPath"></co-breadcrumb>\n' +
+    '            <cf-breadcrumb callback="breadcrumbCallback({path: path})" path="currPath"></cf-breadcrumb>\n' +
     '\n' +
     '            <table class="table table-hover cf-m-table ed-m-node-table">\n' +
     '              <thead>\n' +

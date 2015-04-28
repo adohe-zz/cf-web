@@ -12,7 +12,7 @@ gulp.task('clean', function(cb) {
   del([
     '.tmp/**',
     '.sass-cache/**',
-    'public/**',
+    'public/*',
     'index.html'
   ], { force: true }, cb);
 });
