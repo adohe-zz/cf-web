@@ -71,8 +71,6 @@ module.run(['$templateCache', function($templateCache) {
     '        <div class="row">\n' +
     '          <div class="col-lg-12 col-md-12 col-sm-12">\n' +
     '\n' +
-    '            <cf-breadcrumb callback="breadcrumbCallback({path: path})" path="currPath"></cf-breadcrumb>\n' +
-    '\n' +
     '            <table class="table table-hover cf-m-table ed-m-node-table">\n' +
     '              <thead>\n' +
     '                <tr>\n' +
@@ -305,6 +303,7 @@ angular.module('slb.module')
       supressNotifications: true
     })
     .then(function(resp) {
+      console.log(resp.data.service);
       return resp.data.service;
     });
   }

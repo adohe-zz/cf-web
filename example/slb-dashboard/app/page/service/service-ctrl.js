@@ -21,13 +21,13 @@ angular.module('slb.page')
 
   };
 
-  $scope.rowClick = function() {
+  $scope.rowClick = function(service) {
 
   };
 
   pollerSvc.register('servicePoller', {
     fn: $scope.fetchService,
     scope: $scope,
-    interval: 5000
+    interval: 60 * 1000
   });
 });
