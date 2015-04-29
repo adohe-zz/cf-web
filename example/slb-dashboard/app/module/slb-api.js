@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('slb.module')
-.factory('slbApiSvc', function($http, $q, $, _) {
+.factory('slbApiSvc', function($http, $q, $, _, pathSvc) {
 
   function createNode(node) {
   }
@@ -12,7 +12,13 @@ angular.module('slb.module')
   function deleteNode(node) {
   }
 
-  function fetchNode(key) {
+  function fetchNode() {
+    return $http.get(pathSvc.getHost() + pathSvc.getFullServicePath(), {
+      supressNotifications: true
+    })
+    .then(function(resp) {
+      return resp.data.service;
+    });
   }
 
   return {

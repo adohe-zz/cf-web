@@ -79,28 +79,27 @@ module.run(['$templateCache', function($templateCache) {
     '                  <th class="ed-m-node-table__cog-col">&nbsp;</th>\n' +
     '                  <th>Name</th>\n' +
     '                  <th class="ed-m-node-table__value-col">Namespace</th>\n' +
-    '                  <th class="ed-m-node-table__ttl-col">Contacts</th>\n' +
+    '                  <th class="ed-m-node-table__ttl-col">Contract</th>\n' +
     '                </tr>\n' +
     '              </thead>\n' +
     '              <tbody>\n' +
-    '                <tr ng-repeat="node in currNode.nodes | orderBy:\'name\' track by node.name"\n' +
+    '                <tr ng-repeat="service in service.services | orderBy:\'name\' track by service.name"\n' +
     '                ng-class="ed-m-node-table__node-row"\n' +
-    '                ng-click="rowClick(node)"\n' +
+    '                ng-click="rowClick(service)"\n' +
     '                class="co-m-table-interact-entire-element">\n' +
     '                <td>\n' +
-    '                  <ed-node-cog node="node"></ed-node-cog>\n' +
+    '                  <ed-node-cog node="service"></ed-node-cog>\n' +
     '                </td>\n' +
     '                <td>\n' +
-    '                  <a class="co-m-table__constrain-content" ng-if="node.dir" href="#">{{truncateKey(node.key)}}</a>\n' +
-    '                  <span class="co-m-table__constrain-content" ng-if="!node.dir">{{truncateKey(node.key)}}</span>\n' +
+    '                  <span class="co-m-table__constrain-content">{{truncateKey(service.name)}}</span>\n' +
     '                </td>\n' +
     '                <td>\n' +
     '                  <div class="co-m-table__constrain-content">\n' +
-    '                    <span cf-highlight="node.value">{{node.namespace}}</span>\n' +
+    '                    <span cf-highlight="service.namespace">{{service.namespace}}</span>\n' +
     '                  </div>\n' +
     '                </td>\n' +
     '                <td>\n' +
-    '                  <span cf-highlight="node.ttl">{{node.contacts}}</span>\n' +
+    '                  <span cf-highlight="service.contract">{{service.contract}}</span>\n' +
     '                </td>\n' +
     '              </tr>\n' +
     '            </tbody>\n' +
@@ -221,7 +220,76 @@ slbDashboard.config(function($routeProvider, $locationProvider, $httpProvider,
 'use strict';
 
 angular.module('slb.module')
-.factory('slbApiSvc', function($http, $q, $, _) {
+.factory('pathSvc', function() {
+
+  var keyPrefix = '/v1/services/',
+      statsPrefix = '/v1/instances/';
+
+  return {
+
+    clean: function(path) {
+      var parts = this.explode(path);
+      if (parts.length === 0) {
+        return '';
+      }
+      return parts.join('/');
+    },
+
+    make: function(arr) {
+      return '/' + arr.join('/');
+    },
+
+    explode: function(str) {
+      var parts = str.split('/');
+      parts = parts.filter(function(v) {
+        return v !== '';
+      });
+      return parts;
+    },
+
+    /**
+     * Get the last segment of a path.
+     */
+    tail: function(path) {
+      var parts = this.explode(path);
+      if (parts.length) {
+        return parts[parts.length-1];
+      }
+      return '/';
+    },
+
+    truncate: function(path, maxlen) {
+      var prefix = '/..';
+      maxlen = maxlen || 10;
+      if (!path || !path.length) {
+        return '';
+      }
+      if (path.length <= maxlen) {
+        return path;
+      }
+      return prefix +
+        path.substring(path.length - maxlen + prefix.length, path.length);
+    },
+
+    getFullServicePath: function() {
+      var path = '/' + this.clean(keyPrefix);
+      if (path === keyPrefix.substring(0, keyPrefix.length - 1)) {
+        return keyPrefix;
+      }
+      return path;
+    },
+
+    getHost: function() {
+      return "http://127.0.0.1:8088";
+    }
+  };
+
+});
+
+'use strict';
+
+angular.module('slb.module')
+.factory('slbApiSvc', function($http, $q, $, _, pathSvc) {
 
   function createNode(node) {
   }
@@ -232,7 +300,13 @@ angular.module('slb.module')
   function deleteNode(node) {
   }
 
-  function fetchNode(key) {
+  function fetchNode() {
+    return $http.get(pathSvc.getHost() + pathSvc.getFullServicePath(), {
+      supressNotifications: true
+    })
+    .then(function(resp) {
+      return resp.data.service;
+    });
   }
 
   return {
@@ -250,13 +324,20 @@ angular.module('slb.module')
 'use strict';
 
 angular.module('slb.page')
-.controller('ServiceCtrl', function($scope, $modal, slbApiSvc, pollerSvc) {
+.controller('ServiceCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc) {
 
   $scope.currPath = '/';
   $scope.currNode = null;
 
-  $scope.fetchService = function() {
+  $scope.truncateKey = function(key) {
+      return pathSvc.tail(key);
+  };
 
+  $scope.fetchService = function() {
+    return slbApiSvc.fetch().
+      then(function(service) {
+        $scope.service = service;
+    });
   };
 
   $scope.openCreateModal = function() {
@@ -269,7 +350,8 @@ angular.module('slb.page')
 
   pollerSvc.register('servicePoller', {
     fn: $scope.fetchService,
-    scope: $scope
+    scope: $scope,
+    interval: 5000
   });
 });
 

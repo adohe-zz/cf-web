@@ -1,13 +1,20 @@
 'use strict';
 
 angular.module('slb.page')
-.controller('ServiceCtrl', function($scope, $modal, slbApiSvc, pollerSvc) {
+.controller('ServiceCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc) {
 
   $scope.currPath = '/';
   $scope.currNode = null;
 
-  $scope.fetchService = function() {
+  $scope.truncateKey = function(key) {
+      return pathSvc.tail(key);
+  };
 
+  $scope.fetchService = function() {
+    return slbApiSvc.fetch().
+      then(function(service) {
+        $scope.service = service;
+    });
   };
 
   $scope.openCreateModal = function() {
@@ -20,6 +27,7 @@ angular.module('slb.page')
 
   pollerSvc.register('servicePoller', {
     fn: $scope.fetchService,
-    scope: $scope
+    scope: $scope,
+    interval: 5000
   });
 });
