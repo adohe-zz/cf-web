@@ -1,3 +1,5 @@
+var http = require('http');
+
 /**
  * Expose
  */
@@ -9,7 +11,7 @@ module.exports = function(app) {
     });
 
     app.get('/dashboard/service', function(req, res) {
-      res.render('index');
+        res.render('index');
     });
 
     app.all('/v1/services', function(req, res, next) {
@@ -20,24 +22,28 @@ module.exports = function(app) {
 
     // Services API
     app.get('/v1/services', function(req, res) {
-        var data = { "service": {
-          "services": [
-            {
-              "name": "test",
-              "namespace": "test",
-              "contract": "tony"
-            },
-            {
-              "name": "test2",
-              "namespace": "test2",
-              "contract": "tony"
-            }
-          ]
-        } };
-        res.writeHead(200, {
-          'Content-Type': 'application/json'
+        http.get('http://127.0.0.1/service', function(resp) {
+            var data = [];
+
+            resp.on('data', function(chunk) {
+                data.push(chunk);
+            });
+            resp.on('end', function() {
+                var serviceList = JSON.parse(data.join('')).serviceList;
+                var result = {
+                    'service': {
+                        'services': serviceList
+                    }
+                };
+                res.writeHead(200, {
+                    'Content-Type': 'application/json'
+                });
+                res.write(JSON.stringify(result));
+                res.end();
+            });
+        }).on('error', function(e) {
+            res.writeHead(500);
+            res.end();
         });
-        res.write(JSON.stringify(data));
-        res.end();
     });
 }

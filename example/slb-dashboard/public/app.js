@@ -77,11 +77,11 @@ module.run(['$templateCache', function($templateCache) {
     '                  <th class="ed-m-node-table__cog-col">&nbsp;</th>\n' +
     '                  <th>Name</th>\n' +
     '                  <th class="ed-m-node-table__value-col">Namespace</th>\n' +
-    '                  <th class="ed-m-node-table__ttl-col">Contract</th>\n' +
+    '                  <th class="ed-m-node-table__ttl-col">Contacts</th>\n' +
     '                </tr>\n' +
     '              </thead>\n' +
     '              <tbody>\n' +
-    '                <tr ng-repeat="service in service.services | orderBy:\'name\' track by service.name"\n' +
+    '                <tr ng-repeat="service in service.services | orderBy:\'serviceName\' track by service.serviceName"\n' +
     '                ng-class="ed-m-node-table__node-row"\n' +
     '                ng-click="rowClick(service)"\n' +
     '                class="co-m-table-interact-entire-element">\n' +
@@ -89,15 +89,15 @@ module.run(['$templateCache', function($templateCache) {
     '                  <ed-node-cog node="service"></ed-node-cog>\n' +
     '                </td>\n' +
     '                <td>\n' +
-    '                  <span class="co-m-table__constrain-content">{{truncateKey(service.name)}}</span>\n' +
+    '                  <span class="co-m-table__constrain-content">{{truncateKey(service.serviceName)}}</span>\n' +
     '                </td>\n' +
     '                <td>\n' +
     '                  <div class="co-m-table__constrain-content">\n' +
-    '                    <span cf-highlight="service.namespace">{{service.namespace}}</span>\n' +
+    '                    <span cf-highlight="service.serviceNamespace">{{service.serviceNamespace}}</span>\n' +
     '                  </div>\n' +
     '                </td>\n' +
     '                <td>\n' +
-    '                  <span cf-highlight="service.contract">{{service.contract}}</span>\n' +
+    '                  <span cf-highlight="service.serviceContacts">{{service.serviceContacts}}</span>\n' +
     '                </td>\n' +
     '              </tr>\n' +
     '            </tbody>\n' +
@@ -343,14 +343,14 @@ angular.module('slb.page')
 
   };
 
-  $scope.rowClick = function() {
+  $scope.rowClick = function(service) {
 
   };
 
   pollerSvc.register('servicePoller', {
     fn: $scope.fetchService,
     scope: $scope,
-    interval: 5000
+    interval: 60 * 1000
   });
 });
 
