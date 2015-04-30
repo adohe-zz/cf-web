@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('slb.ui')
-.directive('edNodeCog', function($modal, $rootScope, slbApiSvc, toastSvc,
+.directive('edNodeCog', function($modal, $rootScope, slbApiSvc,
       CF_EVENT) {
 
   return {
-    templateUrl: '/ui/node-cog.html',
+    templateUrl: '/page/node-cog.html',
     restrict: 'E',
     replace: true,
     scope: {

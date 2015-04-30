@@ -5488,6 +5488,35 @@ svg .x-axis path {
     width: 100%;
     height: 100%; }
 
+.cf-m-cog {
+  position: relative;
+  color: #999;
+  display: inline-block; }
+  .cf-m-cog:hover {
+    cursor: pointer; }
+  .cf-m-cog.open .cf-m-cog__icon {
+    color: #2276ad; }
+
+.cf-m-cog-wrapper {
+  display: inline-block; }
+
+.cf-m-cog__icon {
+  vertical-align: middle; }
+
+.cf-m-cog__icon--size-large {
+  font-size: 140%; }
+
+.cf-m-cog__icon--size-small {
+  font-size: 125%; }
+
+.cf-m-cog__dropdown--anchor-left {
+  left: 0px;
+  right: auto; }
+
+.cf-m-cog__dropdown--anchor-right {
+  right: 0px;
+  left: auto; }
+
 html, body {
   height: 100%; }
 

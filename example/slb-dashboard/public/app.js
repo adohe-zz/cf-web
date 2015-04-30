@@ -115,6 +115,21 @@ module.run(['$templateCache', function($templateCache) {
 }]);
 })();
 
+(function(module) {
+try {
+  module = angular.module('templates-views');
+} catch (e) {
+  module = angular.module('templates-views', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('/page/node-cog.html',
+    '<div>\n' +
+    '  <cf-cog options="cogDropdownOptions" size="small" anchor="left"></cf-cog>\n' +
+    '</div>\n' +
+    '');
+}]);
+})();
+
 'use strict';
 
 angular.module('slb.module', []);
@@ -362,5 +377,40 @@ angular.module('slb.page')
 
   $scope.close = function() {
 
+  };
+});
+
+'use strict';
+
+angular.module('slb.ui')
+.directive('edNodeCog', function($modal, $rootScope, slbApiSvc,
+      CF_EVENT) {
+
+  return {
+    templateUrl: '/page/node-cog.html',
+    restrict: 'E',
+    replace: true,
+    scope: {
+      'node': '='
+    },
+    controller: function($scope){
+
+      // Dropdown Options
+      $scope.cogDropdownOptions = [
+        {
+          label: 'View Service Details...',
+          callback: function() {
+            $modal.open({
+              templateUrl: '/page/service/service-info.html',
+              controller: 'ServiceInfoCtrl',
+              resolve: {
+                node: d3.functor($scope.node)
+              }
+            });
+          },
+          weight: 100
+        }
+      ];
+    }
   };
 });
