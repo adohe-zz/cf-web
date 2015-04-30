@@ -60,7 +60,7 @@ module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/page/service/service.html',
     '<div class="ed-p-browser">\n' +
     '\n' +
-    '  <cf-nav-title title="Browser">\n' +
+    '  <cf-nav-title title="Services">\n' +
     '    <a ng-click="openCreateModal()" href="#" class="cf-m-primary-action">\n' +
     '      <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Create Node</a>\n' +
     '  </cf-nav-title>\n' +
@@ -303,7 +303,6 @@ angular.module('slb.module')
       supressNotifications: true
     })
     .then(function(resp) {
-      console.log(resp.data.service);
       return resp.data.service;
     });
   }

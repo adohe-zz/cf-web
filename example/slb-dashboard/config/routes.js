@@ -22,7 +22,7 @@ module.exports = function(app) {
 
     // Services API
     app.get('/v1/services', function(req, res) {
-        http.get('http://127.0.0.1/service', function(resp) {
+        http.get('http://localhost', function(resp) {
             var data = [];
 
             resp.on('data', function(chunk) {
