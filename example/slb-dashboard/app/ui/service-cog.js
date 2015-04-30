@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('slb.ui')
-.directive('edNodeCog', function($modal, $rootScope, slbApiSvc,
+.directive('edServiceCog', function($modal, $rootScope, slbApiSvc,
       CF_EVENT) {
 
   return {
-    templateUrl: '/page/node-cog.html',
+    templateUrl: '/page/service-cog.html',
     restrict: 'E',
     replace: true,
     scope: {
-      'node': '='
+      'service': '='
     },
     controller: function($scope){
 
@@ -22,7 +22,7 @@ angular.module('slb.ui')
               templateUrl: '/page/service/service-info.html',
               controller: 'ServiceInfoCtrl',
               resolve: {
-                node: d3.functor($scope.node)
+                service: d3.functor($scope.service)
               }
             });
           },

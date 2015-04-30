@@ -94,6 +94,7 @@ gulp.task('concat:deps', function() {
     'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
     'bower_components/underscore/underscore.js',
     'bower_components/underscore.string/lib/underscore.string.js',
+    'bower_components/d3/d3.js',
     'app/cf-web/cf.min.js',
     ])
     .pipe(concat('deps.js'))

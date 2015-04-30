@@ -35,7 +35,7 @@ module.run(['$templateCache', function($templateCache) {
     '      <tbody>\n' +
     '        <tr ng-repeat="key in objectKeys | orderBy:identityFn">\n' +
     '          <td>{{key}}</td>\n' +
-    '          <td>{{node[key]}}</td>\n' +
+    '          <td>{{service[key]}}</td>\n' +
     '        </tr>\n' +
     '      </tbody>\n' +
     '    </table>\n' +
@@ -86,7 +86,7 @@ module.run(['$templateCache', function($templateCache) {
     '                ng-click="rowClick(service)"\n' +
     '                class="co-m-table-interact-entire-element">\n' +
     '                <td>\n' +
-    '                  <ed-node-cog node="service"></ed-node-cog>\n' +
+    '                  <ed-service-cog service="service"></ed-service-cog>\n' +
     '                </td>\n' +
     '                <td>\n' +
     '                  <span class="co-m-table__constrain-content">{{truncateKey(service.serviceName)}}</span>\n' +
@@ -122,7 +122,7 @@ try {
   module = angular.module('templates-views', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('/page/node-cog.html',
+  $templateCache.put('/page/service-cog.html',
     '<div>\n' +
     '  <cf-cog options="cogDropdownOptions" size="small" anchor="left"></cf-cog>\n' +
     '</div>\n' +
@@ -149,11 +149,12 @@ var slbDashboard = angular.module('slb.dashboard', [
   'templates-views',
   'underscore',
   'jquery',
+  'd3'
 ]);
 
 // Routes
 slbDashboard.config(function($routeProvider, $locationProvider, $httpProvider,
-    $compileProvider, errorMessageSvcProvider,
+    $compileProvider, pollerSvcProvider, errorMessageSvcProvider,
     configSvcProvider) {
 
   var siteBasePath = '/dashboard';
@@ -182,6 +183,12 @@ slbDashboard.config(function($routeProvider, $locationProvider, $httpProvider,
 
   // Emit event for any request error.
   $httpProvider.interceptors.push('interceptorErrorSvc');
+
+  // Poller settings.
+  pollerSvcProvider.settings({
+    interval: 5000,
+    maxRetries: 5
+  });
 
   // Configure routes.
   $routeProvider
@@ -375,23 +382,27 @@ angular.module('slb.page')
 
   $scope.service = service;
 
-  $scope.close = function() {
+  $scope.objectKeys = _.without(_.keys(service), 'endpointList');
 
+  $scope.identityFn = _.identity;
+
+  $scope.close = function() {
+    $modalInstance.dismiss('close');
   };
 });
 
 'use strict';
 
 angular.module('slb.ui')
-.directive('edNodeCog', function($modal, $rootScope, slbApiSvc,
+.directive('edServiceCog', function($modal, $rootScope, slbApiSvc,
       CF_EVENT) {
 
   return {
-    templateUrl: '/page/node-cog.html',
+    templateUrl: '/page/service-cog.html',
     restrict: 'E',
     replace: true,
     scope: {
-      'node': '='
+      'service': '='
     },
     controller: function($scope){
 
@@ -404,7 +415,7 @@ angular.module('slb.ui')
               templateUrl: '/page/service/service-info.html',
               controller: 'ServiceInfoCtrl',
               resolve: {
-                node: d3.functor($scope.node)
+                service: d3.functor($scope.service)
               }
             });
           },

@@ -17,11 +17,12 @@ var slbDashboard = angular.module('slb.dashboard', [
   'templates-views',
   'underscore',
   'jquery',
+  'd3'
 ]);
 
 // Routes
 slbDashboard.config(function($routeProvider, $locationProvider, $httpProvider,
-    $compileProvider, errorMessageSvcProvider,
+    $compileProvider, pollerSvcProvider, errorMessageSvcProvider,
     configSvcProvider) {
 
   var siteBasePath = '/dashboard';
@@ -50,6 +51,12 @@ slbDashboard.config(function($routeProvider, $locationProvider, $httpProvider,
 
   // Emit event for any request error.
   $httpProvider.interceptors.push('interceptorErrorSvc');
+
+  // Poller settings.
+  pollerSvcProvider.settings({
+    interval: 5000,
+    maxRetries: 5
+  });
 
   // Configure routes.
   $routeProvider

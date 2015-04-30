@@ -5,7 +5,11 @@ angular.module('slb.page')
 
   $scope.service = service;
 
-  $scope.close = function() {
+  $scope.objectKeys = _.without(_.keys(service), 'endpointList');
 
+  $scope.identityFn = _.identity;
+
+  $scope.close = function() {
+    $modalInstance.dismiss('close');
   };
 });
