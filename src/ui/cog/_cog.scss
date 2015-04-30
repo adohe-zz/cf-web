@@ -1,0 +1,36 @@
+.cf-m-cog {
+  position: relative;
+  color: $gray;
+  display: inline-block;
+  &:hover {
+    cursor: pointer;
+  }
+  &.open .cf-m-cog__icon {
+    color: $color-cog-active;
+  }
+}
+
+.cf-m-cog-wrapper {
+  display: inline-block;
+}
+
+// icon
+.cf-m-cog__icon {
+  vertical-align: middle;
+}
+.cf-m-cog__icon--size-large {
+  font-size: 140%;
+}
+.cf-m-cog__icon--size-small {
+  font-size: 125%;
+}
+
+// dropdown
+.cf-m-cog__dropdown--anchor-left {
+  left: 0px;
+  right: auto;
+}
+.cf-m-cog__dropdown--anchor-right {
+  right: 0px;
+  left: auto;
+}
