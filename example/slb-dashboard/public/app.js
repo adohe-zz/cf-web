@@ -25,7 +25,7 @@ module.run(['$templateCache', function($templateCache) {
     '  </div>\n' +
     '\n' +
     '  <div class="modal-body">\n' +
-    '    <table id="ed-m-property-table" class="table">\n' +
+    '    <!--table id="ed-m-property-table" class="table">\n' +
     '      <thead>\n' +
     '        <tr>\n' +
     '          <th>property</th>\n' +
@@ -38,7 +38,55 @@ module.run(['$templateCache', function($templateCache) {
     '          <td>{{service[key]}}</td>\n' +
     '        </tr>\n' +
     '      </tbody>\n' +
-    '    </table>\n' +
+    '    </table-->\n' +
+    '      <div class="row">\n' +
+    '          <div class="col-lg-6">\n' +
+    '\n' +
+    '            <div class="cf-m-pane">\n' +
+    '              <div class="cf-m-pane__heading--bordered">\n' +
+    '                <h1 class="cf-m-pane__title">Grouped Pane with borders</h1>\n' +
+    '              </div>\n' +
+    '              <div class="cf-m-pane__body-group">\n' +
+    '                <div class="cf-m-pane__body-section--bordered">\n' +
+    '                  Section one\n' +
+    '                </div>\n' +
+    '                <div class="cf-m-pane__body-section--bordered">\n' +
+    '                  Section two\n' +
+    '                </div>\n' +
+    '                <div class="cf-m-pane__body-section--bordered">\n' +
+    '                  Section three\n' +
+    '                </div>\n' +
+    '                <div class="cf-m-pane__body-section--bordered">\n' +
+    '                  Section four\n' +
+    '                </div>\n' +
+    '              </div>\n' +
+    '            </div>\n' +
+    '\n' +
+    '          </div>\n' +
+    '          <div class="col-lg-6">\n' +
+    '\n' +
+    '            <div class="cf-m-pane">\n' +
+    '              <div class="cf-m-pane__heading--bordered">\n' +
+    '                <h1 class="cf-m-pane__title">Grouped Pane (header border only)</h1>\n' +
+    '              </div>\n' +
+    '              <div class="cf-m-pane__body-group">\n' +
+    '                <div class="cf-m-pane__body-section">\n' +
+    '                  Section one\n' +
+    '                </div>\n' +
+    '                <div class="cf-m-pane__body-section">\n' +
+    '                  Section two\n' +
+    '                </div>\n' +
+    '                <div class="cf-m-pane__body-section">\n' +
+    '                  Section three\n' +
+    '                </div>\n' +
+    '                <div class="cf-m-pane__body-section">\n' +
+    '                  Section four\n' +
+    '                </div>\n' +
+    '              </div>\n' +
+    '            </div>\n' +
+    '\n' +
+    '          </div>\n' +
+    '      </div>\n' +
     '  </div>\n' +
     '\n' +
     '  <div class="modal-footer">\n' +
