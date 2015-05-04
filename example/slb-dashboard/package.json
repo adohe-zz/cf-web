@@ -17,8 +17,7 @@
     "compression": "1.1.0",
     "method-override": "2.2.0",
     "multer": "0.1.4",
-    "swig": "1.4.2",
-    "underscore": "1.8.3"
+    "swig": "1.4.2"
   },
   "author": "TonyAdo <coolhzb@163.com>",
   "license": "MIT"

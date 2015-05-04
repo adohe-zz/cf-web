@@ -56,7 +56,6 @@ module.exports = function(app) {
             body = {
                 'serviceName': name,
                 'serviceNamespace': namespace,
-                "subEnv": 'fws'
             };
 
         if(util.isEmpty(name) || util.isEmpty(namespace)) {
@@ -73,18 +72,15 @@ module.exports = function(app) {
             };
             async.parallel({
                 fws: function(cb) {
-                    var fwsBody = querystring.stringify(body);
+                    var fwsBody = body;
+                    fwsBody["subEnv"] = "fws";
                     var fwsOptions = {
                         hostname: '',
-                        port: 80,
-                        path: '/registry-service/getserviceinstances',
-                        method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json',
-                            'Content-Length': fwsBody.length
+                            'Content-Length': querystring.stringify(fwsBody).length
                         }
                     };
-                    var req = http.request(fwsOptions, function(res) {
+                    var req = http.request(util.merge(fwsOptions, options), function(res) {
                         var data = '';
                         res.setEncoding('utf8');
                         res.on('data', function(chunk) {
@@ -100,8 +96,48 @@ module.exports = function(app) {
                     req.end();
                 },
                 uat: function(cb) {
+                    var uatOptions = {
+                        hostname: '',
+                        headers: {
+                            'Content-Length': querystring.stringify(body).length
+                        }
+                    };
+                    var req = http.request(util.merge(uatOptions, options), function(res) {
+                        var data = '';
+                        res.setEnconding('utf8');
+                        res.on('data', function(chunk) {
+                            data += chunk;
+                        });
+                        res.on('end', function() {
+                        });
+                    });
+                    req.on('error', function(e) {
+                        cb(e, null);
+                    });
+                    req.write(body);
+                    req.end();
                 },
                 prod: function(cb) {
+                    var prodOptions = {
+                        hostname: '',
+                        headers: {
+                            'Content-Length': querystring.stringify(body).length
+                        }
+                    };
+                    var req = http.request(util.merge(prodOptions, options), function(res) {
+                        var data = '';
+                        res.setEnconding('utf8');
+                        res.on('data', function(chunk) {
+                            data += chunk;
+                        });
+                        res.on('end', function() {
+                        });
+                    });
+                    req.on('error', function(e) {
+                        cb(e, null);
+                    });
+                    req.write(body);
+                    req.end();
                 }
             },
             function(err, results) {
