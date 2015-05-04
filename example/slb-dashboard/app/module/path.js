@@ -4,7 +4,8 @@ angular.module('slb.module')
 .factory('pathSvc', function() {
 
   var keyPrefix = '/v1/services/',
-      statsPrefix = '/v1/instances/';
+      statsPrefix = '/v1/instances/',
+      servicePrefix = '/v1/service/';
 
   return {
 
@@ -52,12 +53,16 @@ angular.module('slb.module')
         path.substring(path.length - maxlen + prefix.length, path.length);
     },
 
-    getFullServicePath: function() {
+    getServicesListPath: function() {
       var path = '/' + this.clean(keyPrefix);
       if (path === keyPrefix.substring(0, keyPrefix.length - 1)) {
         return keyPrefix;
       }
       return path;
+    },
+
+    getServiceInstancesPath: function(name, namespace) {
+      return '/' + this.clean(servicePrefix) + '/' + name + '/' + namespace;
     },
 
     getHost: function() {

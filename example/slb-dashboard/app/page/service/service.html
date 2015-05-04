@@ -1,9 +1,6 @@
 <div class="ed-p-browser">
 
-  <cf-nav-title title="Services">
-    <a ng-click="openCreateModal()" href="#" class="cf-m-primary-action">
-      <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Create Node</a>
-  </cf-nav-title>
+  <cf-nav-title title="Services"></cf-nav-title>
 
     <div class="panel cf-m-panel cf-fx-box-shadow-heavy">
       <div class="panel-body">
@@ -15,13 +12,13 @@
               <thead>
                 <tr>
                   <th class="ed-m-node-table__cog-col">&nbsp;</th>
-                  <th>Name</th>
-                  <th class="ed-m-node-table__value-col">Namespace</th>
+                  <th>ServiceName</th>
+                  <th class="ed-m-node-table__value-col">ServiceNamespace</th>
                   <th class="ed-m-node-table__ttl-col">Contacts</th>
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="service in service.services | orderBy:'serviceName' track by service.serviceName"
+                <tr ng-repeat="service in services | orderBy:'serviceName' track by service.serviceName"
                 ng-class="ed-m-node-table__node-row"
                 ng-click="rowClick(service)"
                 class="co-m-table-interact-entire-element">

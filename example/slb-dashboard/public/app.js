@@ -6,6 +6,59 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/page/instances/instances.html',
+    '<div class="ed-p-browser">\n' +
+    '\n' +
+    '  <cf-nav-title title="Services">\n' +
+    '    <a ng-click="openCreateModal()" href="#" class="cf-m-primary-action">\n' +
+    '      <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Create Node</a>\n' +
+    '  </cf-nav-title>\n' +
+    '\n' +
+    '    <div class="panel cf-m-panel cf-fx-box-shadow-heavy">\n' +
+    '      <div class="panel-body">\n' +
+    '\n' +
+    '        <div class="row">\n' +
+    '          <div class="col-lg-12 col-md-12 col-sm-12">\n' +
+    '\n' +
+    '            <table class="table table-hover cf-m-table ed-m-node-table">\n' +
+    '              <thead>\n' +
+    '                <tr>\n' +
+    '                  <th class="ed-m-node-table__cog-col">&nbsp;</th>\n' +
+    '                  <th>Name</th>\n' +
+    '                  <th class="ed-m-node-table__value-col">Namespace</th>\n' +
+    '                  <th class="ed-m-node-table__ttl-col">Contacts</th>\n' +
+    '                </tr>\n' +
+    '              </thead>\n' +
+    '              <tbody>\n' +
+    '                <tr ng-repeat="service in service.services | orderBy:\'serviceName\' track by service.serviceName"\n' +
+    '                ng-class="ed-m-node-table__node-row"\n' +
+    '                ng-click="rowClick(service)"\n' +
+    '                class="co-m-table-interact-entire-element">\n' +
+    '                <td>\n' +
+    '                  <ed-service-cog service="service"></ed-service-cog>\n' +
+    '                </td>\n' +
+    '                <td>\n' +
+    '                  <span class="co-m-table__constrain-content">{{truncateKey(service.serviceName)}}</span>\n' +
+    '                </td>\n' +
+    '                <td>\n' +
+    '                  <div class="co-m-table__constrain-content">\n' +
+    '                    <span cf-highlight="service.serviceNamespace">{{service.serviceNamespace}}</span>\n' +
+    '                  </div>\n' +
+    '                </td>\n' +
+    '                <td>\n' +
+    '                  <span cf-highlight="service.serviceContacts">{{service.serviceContacts}}</span>\n' +
+    '                </td>\n' +
+    '              </tr>\n' +
+    '            </tbody>\n' +
+    '          </table>\n' +
+    '\n' +
+    '        </div>\n' +
+    '\n' +
+    '      </div>\n' +
+    '\n' +
+    '    </div>\n' +
+    '  </div>\n' +
+    '\n' +
+    '</div>\n' +
     '');
 }]);
 })();
@@ -44,7 +97,7 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '            <div class="cf-m-pane">\n' +
     '              <div class="cf-m-pane__heading--bordered">\n' +
-    '                <h1 class="cf-m-pane__title">Grouped Pane with borders</h1>\n' +
+    '                <h1 class="cf-m-pane__title">FWS</h1>\n' +
     '              </div>\n' +
     '              <div class="cf-m-pane__body-group">\n' +
     '                <div class="cf-m-pane__body-section--bordered">\n' +
@@ -64,10 +117,9 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '          </div>\n' +
     '          <div class="col-lg-6">\n' +
-    '\n' +
     '            <div class="cf-m-pane">\n' +
     '              <div class="cf-m-pane__heading--bordered">\n' +
-    '                <h1 class="cf-m-pane__title">Grouped Pane (header border only)</h1>\n' +
+    '                <h1 class="cf-m-pane__title">UAT</h1>\n' +
     '              </div>\n' +
     '              <div class="cf-m-pane__body-group">\n' +
     '                <div class="cf-m-pane__body-section">\n' +
@@ -84,7 +136,27 @@ module.run(['$templateCache', function($templateCache) {
     '                </div>\n' +
     '              </div>\n' +
     '            </div>\n' +
-    '\n' +
+    '          </div>\n' +
+    '          <div class="col-lg-6">\n' +
+    '            <div class="cf-m-pane">\n' +
+    '              <div class="cf-m-pane__heading--bordered">\n' +
+    '                <h1 class="cf-m-pane__title">Prod</h1>\n' +
+    '              </div>\n' +
+    '              <div class="cf-m-pane__body-group">\n' +
+    '                <div class="cf-m-pane__body-section">\n' +
+    '                  Section one\n' +
+    '                </div>\n' +
+    '                <div class="cf-m-pane__body-section">\n' +
+    '                  Section two\n' +
+    '                </div>\n' +
+    '                <div class="cf-m-pane__body-section">\n' +
+    '                  Section three\n' +
+    '                </div>\n' +
+    '                <div class="cf-m-pane__body-section">\n' +
+    '                  Section four\n' +
+    '                </div>\n' +
+    '              </div>\n' +
+    '            </div>\n' +
     '          </div>\n' +
     '      </div>\n' +
     '  </div>\n' +
@@ -108,10 +180,7 @@ module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/page/service/service.html',
     '<div class="ed-p-browser">\n' +
     '\n' +
-    '  <cf-nav-title title="Services">\n' +
-    '    <a ng-click="openCreateModal()" href="#" class="cf-m-primary-action">\n' +
-    '      <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Create Node</a>\n' +
-    '  </cf-nav-title>\n' +
+    '  <cf-nav-title title="Services"></cf-nav-title>\n' +
     '\n' +
     '    <div class="panel cf-m-panel cf-fx-box-shadow-heavy">\n' +
     '      <div class="panel-body">\n' +
@@ -123,13 +192,13 @@ module.run(['$templateCache', function($templateCache) {
     '              <thead>\n' +
     '                <tr>\n' +
     '                  <th class="ed-m-node-table__cog-col">&nbsp;</th>\n' +
-    '                  <th>Name</th>\n' +
-    '                  <th class="ed-m-node-table__value-col">Namespace</th>\n' +
+    '                  <th>ServiceName</th>\n' +
+    '                  <th class="ed-m-node-table__value-col">ServiceNamespace</th>\n' +
     '                  <th class="ed-m-node-table__ttl-col">Contacts</th>\n' +
     '                </tr>\n' +
     '              </thead>\n' +
     '              <tbody>\n' +
-    '                <tr ng-repeat="service in service.services | orderBy:\'serviceName\' track by service.serviceName"\n' +
+    '                <tr ng-repeat="service in services | orderBy:\'serviceName\' track by service.serviceName"\n' +
     '                ng-class="ed-m-node-table__node-row"\n' +
     '                ng-click="rowClick(service)"\n' +
     '                class="co-m-table-interact-entire-element">\n' +
@@ -291,7 +360,8 @@ angular.module('slb.module')
 .factory('pathSvc', function() {
 
   var keyPrefix = '/v1/services/',
-      statsPrefix = '/v1/instances/';
+      statsPrefix = '/v1/instances/',
+      servicePrefix = '/v1/service/';
 
   return {
 
@@ -339,12 +409,16 @@ angular.module('slb.module')
         path.substring(path.length - maxlen + prefix.length, path.length);
     },
 
-    getFullServicePath: function() {
+    getServicesListPath: function() {
       var path = '/' + this.clean(keyPrefix);
       if (path === keyPrefix.substring(0, keyPrefix.length - 1)) {
         return keyPrefix;
       }
       return path;
+    },
+
+    getServiceInstancesPath: function(name, namespace) {
+      return '/' + this.clean(servicePrefix) + '/' + name + '/' + namespace;
     },
 
     getHost: function() {
@@ -368,18 +442,29 @@ angular.module('slb.module')
   function deleteNode(node) {
   }
 
-  function fetchNode() {
-    return $http.get(pathSvc.getHost() + pathSvc.getFullServicePath(), {
+  function fetchServicesList() {
+    return $http.get(pathSvc.getHost() + pathSvc.getServicesListPath(), {
       supressNotifications: true
     })
     .then(function(resp) {
-      return resp.data.service;
+      return resp.data.services;
+    });
+  }
+
+  function fetchServiceInstances(service) {
+    return $http.get(pathSvc.getHost() + pathSvc.getServiceInstancesPath(service.serviceName, service.serviceNamespace), {
+      supressNotifications: true
+    })
+    .then(function(resp) {
+      return resp.data.instances;
     });
   }
 
   return {
-    fetch: fetchNode,
+    fetchServicesList: fetchServicesList,
 
+    fetchServiceInstances: fetchServiceInstances,
+    
     create: createNode,
 
     save: saveNode,
@@ -392,7 +477,7 @@ angular.module('slb.module')
 'use strict';
 
 angular.module('slb.page')
-.controller('ServiceCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc) {
+.controller('InstancesCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc) {
 
   $scope.currPath = '/';
   $scope.currNode = null;
@@ -410,6 +495,36 @@ angular.module('slb.page')
 
   $scope.openCreateModal = function() {
 
+  };
+
+  $scope.rowClick = function(service) {
+
+  };
+
+  pollerSvc.register('instancesPoller', {
+    fn: $scope.fetchService,
+    scope: $scope,
+    interval: 60 * 1000
+  });
+});
+
+'use strict';
+
+angular.module('slb.page')
+.controller('ServiceCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc) {
+
+  $scope.currPath = '/';
+  $scope.currNode = null;
+
+  $scope.truncateKey = function(key) {
+      return pathSvc.tail(key);
+  };
+
+  $scope.fetchService = function() {
+    return slbApiSvc.fetchServicesList().
+      then(function(services) {
+        $scope.services = services;
+    });
   };
 
   $scope.rowClick = function(service) {

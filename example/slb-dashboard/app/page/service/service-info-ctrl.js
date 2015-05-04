@@ -9,6 +9,7 @@ angular.module('slb.page')
 
   $scope.identityFn = _.identity;
 
+  
   $scope.close = function() {
     $modalInstance.dismiss('close');
   };

@@ -12,18 +12,29 @@ angular.module('slb.module')
   function deleteNode(node) {
   }
 
-  function fetchNode() {
-    return $http.get(pathSvc.getHost() + pathSvc.getFullServicePath(), {
+  function fetchServicesList() {
+    return $http.get(pathSvc.getHost() + pathSvc.getServicesListPath(), {
       supressNotifications: true
     })
     .then(function(resp) {
-      return resp.data.service;
+      return resp.data.services;
+    });
+  }
+
+  function fetchServiceInstances(service) {
+    return $http.get(pathSvc.getHost() + pathSvc.getServiceInstancesPath(service.serviceName, service.serviceNamespace), {
+      supressNotifications: true
+    })
+    .then(function(resp) {
+      return resp.data.instances;
     });
   }
 
   return {
-    fetch: fetchNode,
+    fetchServicesList: fetchServicesList,
 
+    fetchServiceInstances: fetchServiceInstances,
+    
     create: createNode,
 
     save: saveNode,

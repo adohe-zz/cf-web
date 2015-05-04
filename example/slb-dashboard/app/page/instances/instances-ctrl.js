@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('slb.page')
-.controller('ServiceCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc) {
+.controller('InstancesCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc) {
 
   $scope.currPath = '/';
   $scope.currNode = null;
@@ -11,17 +11,21 @@ angular.module('slb.page')
   };
 
   $scope.fetchService = function() {
-    return slbApiSvc.fetchServicesList().
-      then(function(services) {
-        $scope.services = services;
+    return slbApiSvc.fetch().
+      then(function(service) {
+        $scope.service = service;
     });
+  };
+
+  $scope.openCreateModal = function() {
+
   };
 
   $scope.rowClick = function(service) {
 
   };
 
-  pollerSvc.register('servicePoller', {
+  pollerSvc.register('instancesPoller', {
     fn: $scope.fetchService,
     scope: $scope,
     interval: 60 * 1000
