@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('slb.page')
-.controller('ServiceInfoCtrl', function($scope, $modalInstance, _, service) {
+.controller('ServiceInfoCtrl', function($scope, $modalInstance, _, service, slbApiSvc) {
 
   $scope.service = service;
 
@@ -9,7 +9,10 @@ angular.module('slb.page')
 
   $scope.identityFn = _.identity;
 
-  
+  slbApiSvc.fetchServiceInstances(service)
+        .then(function(instances) {
+        });
+
   $scope.close = function() {
     $modalInstance.dismiss('close');
   };

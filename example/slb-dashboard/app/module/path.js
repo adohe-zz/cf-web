@@ -62,7 +62,7 @@ angular.module('slb.module')
     },
 
     getServiceInstancesPath: function(name, namespace) {
-      return '/' + this.clean(servicePrefix) + '/' + name + '/' + namespace;
+      return '/' + this.clean(servicePrefix) + '/' + name + '/' + namespace.replace(/\//g, '_');
     },
 
     getHost: function() {

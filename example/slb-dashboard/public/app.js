@@ -418,7 +418,7 @@ angular.module('slb.module')
     },
 
     getServiceInstancesPath: function(name, namespace) {
-      return '/' + this.clean(servicePrefix) + '/' + name + '/' + namespace;
+      return '/' + this.clean(servicePrefix) + '/' + name + '/' + namespace.replace(/\//g, '_');
     },
 
     getHost: function() {
@@ -464,7 +464,7 @@ angular.module('slb.module')
     fetchServicesList: fetchServicesList,
 
     fetchServiceInstances: fetchServiceInstances,
-    
+
     create: createNode,
 
     save: saveNode,
@@ -541,13 +541,17 @@ angular.module('slb.page')
 'use strict';
 
 angular.module('slb.page')
-.controller('ServiceInfoCtrl', function($scope, $modalInstance, _, service) {
+.controller('ServiceInfoCtrl', function($scope, $modalInstance, _, service, slbApiSvc) {
 
   $scope.service = service;
 
   $scope.objectKeys = _.without(_.keys(service), 'endpointList');
 
   $scope.identityFn = _.identity;
+
+  slbApiSvc.fetchServiceInstances(service)
+        .then(function(instances) {
+        });
 
   $scope.close = function() {
     $modalInstance.dismiss('close');

@@ -34,7 +34,7 @@ angular.module('slb.module')
     fetchServicesList: fetchServicesList,
 
     fetchServiceInstances: fetchServiceInstances,
-    
+
     create: createNode,
 
     save: saveNode,
