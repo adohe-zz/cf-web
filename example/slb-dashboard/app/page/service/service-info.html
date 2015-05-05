@@ -5,20 +5,6 @@
   </div>
 
   <div class="modal-body">
-    <!--table id="ed-m-property-table" class="table">
-      <thead>
-        <tr>
-          <th>property</th>
-          <th>value</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="key in objectKeys | orderBy:identityFn">
-          <td>{{key}}</td>
-          <td>{{service[key]}}</td>
-        </tr>
-      </tbody>
-    </table-->
       <div class="row">
           <div class="col-lg-6">
 
@@ -27,17 +13,8 @@
                 <h1 class="cf-m-pane__title">FWS</h1>
               </div>
               <div class="cf-m-pane__body-group">
-                <div class="cf-m-pane__body-section--bordered">
-                  Section one
-                </div>
-                <div class="cf-m-pane__body-section--bordered">
-                  Section two
-                </div>
-                <div class="cf-m-pane__body-section--bordered">
-                  Section three
-                </div>
-                <div class="cf-m-pane__body-section--bordered">
-                  Section four
+                <div ng-repeat="instance in instances.fws | orderBy:'url' track by instance.url" class="cf-m-pane__body-section--bordered">
+                  {{instance.url}}
                 </div>
               </div>
             </div>
@@ -49,17 +26,8 @@
                 <h1 class="cf-m-pane__title">UAT</h1>
               </div>
               <div class="cf-m-pane__body-group">
-                <div class="cf-m-pane__body-section">
-                  Section one
-                </div>
-                <div class="cf-m-pane__body-section">
-                  Section two
-                </div>
-                <div class="cf-m-pane__body-section">
-                  Section three
-                </div>
-                <div class="cf-m-pane__body-section">
-                  Section four
+                <div ng-repeat="instance in instances.uat | orderBy:'url' track by instance.url" class="cf-m-pane__body-section--bordered">
+                  {{instance.url}}
                 </div>
               </div>
             </div>
@@ -70,17 +38,8 @@
                 <h1 class="cf-m-pane__title">Prod</h1>
               </div>
               <div class="cf-m-pane__body-group">
-                <div class="cf-m-pane__body-section">
-                  Section one
-                </div>
-                <div class="cf-m-pane__body-section">
-                  Section two
-                </div>
-                <div class="cf-m-pane__body-section">
-                  Section three
-                </div>
-                <div class="cf-m-pane__body-section">
-                  Section four
+                <div ng-repeat="instance in instances.prod | orderBy:'url' track by instance.url" class="cf-m-pane__body-section--bordered">
+                  {{instance.url}}
                 </div>
               </div>
             </div>

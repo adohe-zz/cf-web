@@ -11,6 +11,7 @@ angular.module('slb.page')
 
   slbApiSvc.fetchServiceInstances(service)
         .then(function(instances) {
+          $scope.instances = instances;
         });
 
   $scope.close = function() {

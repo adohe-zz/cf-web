@@ -19,9 +19,71 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="instance in instances | orderBy:'ip' track by instance.ip">
+              <tr ng-repeat="instance in instances.fws">
                 <td>
-                  <a href="#" ng-click="openDetailModal(instance.ip)" ng-bind="instance.ip"></a>
+                  <a href="#" ng-click="openDetailModal(instance)" ng-bind="instance"></a>
+                </td>
+                <td>
+                  <span>Drop out</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="panel cf-m-panel cf-fx-box-shadow-heavy">
+        <div class="panel-body">
+          <div class="ed-p-instances__fws-container">
+            <h2>UAT</h2>
+          </div>
+
+          <h2>Instances</h2>
+          <table class="table cf-m-table">
+            <thead>
+              <tr>
+                <th>IP</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="instance in instances.uat">
+                <td>
+                  <a href="#" ng-click="openDetailModal(instance)" ng-bind="instance"></a>
+                </td>
+                <td>
+                  <span>Drop out</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="panel cf-m-panel cf-fx-box-shadow-heavy">
+        <div class="panel-body">
+          <div class="ed-p-instances__fws-container">
+            <h2>PROD</h2>
+          </div>
+
+          <h2>Instances</h2>
+          <table class="table cf-m-table">
+            <thead>
+              <tr>
+                <th>IP</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="instance in instances.prod">
+                <td>
+                  <a href="#" ng-click="openDetailModal(instance)" ng-bind="instance"></a>
                 </td>
                 <td>
                   <span>Drop out</span>

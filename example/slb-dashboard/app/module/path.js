@@ -67,7 +67,7 @@ angular.module('slb.module')
 
     getInstancesPath: function() {
       return '/' + this.clean(instancesPrefix);
-    }
+    },
 
     getHost: function() {
       return "http://127.0.0.1:8088";

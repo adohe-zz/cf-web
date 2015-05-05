@@ -6,58 +6,105 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/page/instances/instances.html',
-    '<div class="ed-p-browser">\n' +
+    '<div class="ed-p-instances">\n' +
+    '  <cf-nav-title title="Instances"></cf-nav-title>\n' +
     '\n' +
-    '  <cf-nav-title title="Services">\n' +
-    '    <a ng-click="openCreateModal()" href="#" class="cf-m-primary-action">\n' +
-    '      <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Create Node</a>\n' +
-    '  </cf-nav-title>\n' +
+    '  <div class="row">\n' +
     '\n' +
-    '    <div class="panel cf-m-panel cf-fx-box-shadow-heavy">\n' +
-    '      <div class="panel-body">\n' +
+    '    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">\n' +
+    '      <div class="panel cf-m-panel cf-fx-box-shadow-heavy">\n' +
+    '        <div class="panel-body">\n' +
+    '          <div class="ed-p-instances__fws-container">\n' +
+    '            <h2>FWS</h2>\n' +
+    '          </div>\n' +
     '\n' +
-    '        <div class="row">\n' +
-    '          <div class="col-lg-12 col-md-12 col-sm-12">\n' +
-    '\n' +
-    '            <table class="table table-hover cf-m-table ed-m-node-table">\n' +
-    '              <thead>\n' +
-    '                <tr>\n' +
-    '                  <th class="ed-m-node-table__cog-col">&nbsp;</th>\n' +
-    '                  <th>Name</th>\n' +
-    '                  <th class="ed-m-node-table__value-col">Namespace</th>\n' +
-    '                  <th class="ed-m-node-table__ttl-col">Contacts</th>\n' +
-    '                </tr>\n' +
-    '              </thead>\n' +
-    '              <tbody>\n' +
-    '                <tr ng-repeat="service in service.services | orderBy:\'serviceName\' track by service.serviceName"\n' +
-    '                ng-class="ed-m-node-table__node-row"\n' +
-    '                ng-click="rowClick(service)"\n' +
-    '                class="co-m-table-interact-entire-element">\n' +
+    '          <h2>Instances</h2>\n' +
+    '          <table class="table cf-m-table">\n' +
+    '            <thead>\n' +
+    '              <tr>\n' +
+    '                <th>IP</th>\n' +
+    '                <th>Action</th>\n' +
+    '              </tr>\n' +
+    '            </thead>\n' +
+    '            <tbody>\n' +
+    '              <tr ng-repeat="instance in instances.fws">\n' +
     '                <td>\n' +
-    '                  <ed-service-cog service="service"></ed-service-cog>\n' +
+    '                  <a href="#" ng-click="openDetailModal(instance)" ng-bind="instance"></a>\n' +
     '                </td>\n' +
     '                <td>\n' +
-    '                  <span class="co-m-table__constrain-content">{{truncateKey(service.serviceName)}}</span>\n' +
-    '                </td>\n' +
-    '                <td>\n' +
-    '                  <div class="co-m-table__constrain-content">\n' +
-    '                    <span cf-highlight="service.serviceNamespace">{{service.serviceNamespace}}</span>\n' +
-    '                  </div>\n' +
-    '                </td>\n' +
-    '                <td>\n' +
-    '                  <span cf-highlight="service.serviceContacts">{{service.serviceContacts}}</span>\n' +
+    '                  <span>Drop out</span>\n' +
     '                </td>\n' +
     '              </tr>\n' +
     '            </tbody>\n' +
     '          </table>\n' +
     '\n' +
     '        </div>\n' +
-    '\n' +
     '      </div>\n' +
-    '\n' +
     '    </div>\n' +
-    '  </div>\n' +
     '\n' +
+    '    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">\n' +
+    '      <div class="panel cf-m-panel cf-fx-box-shadow-heavy">\n' +
+    '        <div class="panel-body">\n' +
+    '          <div class="ed-p-instances__fws-container">\n' +
+    '            <h2>UAT</h2>\n' +
+    '          </div>\n' +
+    '\n' +
+    '          <h2>Instances</h2>\n' +
+    '          <table class="table cf-m-table">\n' +
+    '            <thead>\n' +
+    '              <tr>\n' +
+    '                <th>IP</th>\n' +
+    '                <th>Action</th>\n' +
+    '              </tr>\n' +
+    '            </thead>\n' +
+    '            <tbody>\n' +
+    '              <tr ng-repeat="instance in instances.uat">\n' +
+    '                <td>\n' +
+    '                  <a href="#" ng-click="openDetailModal(instance)" ng-bind="instance"></a>\n' +
+    '                </td>\n' +
+    '                <td>\n' +
+    '                  <span>Drop out</span>\n' +
+    '                </td>\n' +
+    '              </tr>\n' +
+    '            </tbody>\n' +
+    '          </table>\n' +
+    '\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '\n' +
+    '    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">\n' +
+    '      <div class="panel cf-m-panel cf-fx-box-shadow-heavy">\n' +
+    '        <div class="panel-body">\n' +
+    '          <div class="ed-p-instances__fws-container">\n' +
+    '            <h2>PROD</h2>\n' +
+    '          </div>\n' +
+    '\n' +
+    '          <h2>Instances</h2>\n' +
+    '          <table class="table cf-m-table">\n' +
+    '            <thead>\n' +
+    '              <tr>\n' +
+    '                <th>IP</th>\n' +
+    '                <th>Action</th>\n' +
+    '              </tr>\n' +
+    '            </thead>\n' +
+    '            <tbody>\n' +
+    '              <tr ng-repeat="instance in instances.prod">\n' +
+    '                <td>\n' +
+    '                  <a href="#" ng-click="openDetailModal(instance)" ng-bind="instance"></a>\n' +
+    '                </td>\n' +
+    '                <td>\n' +
+    '                  <span>Drop out</span>\n' +
+    '                </td>\n' +
+    '              </tr>\n' +
+    '            </tbody>\n' +
+    '          </table>\n' +
+    '\n' +
+    '        </div>\n' +
+    '      </div>\n' +
+    '    </div>\n' +
+    '\n' +
+    '  </div>\n' +
     '</div>\n' +
     '');
 }]);
@@ -78,20 +125,6 @@ module.run(['$templateCache', function($templateCache) {
     '  </div>\n' +
     '\n' +
     '  <div class="modal-body">\n' +
-    '    <!--table id="ed-m-property-table" class="table">\n' +
-    '      <thead>\n' +
-    '        <tr>\n' +
-    '          <th>property</th>\n' +
-    '          <th>value</th>\n' +
-    '        </tr>\n' +
-    '      </thead>\n' +
-    '      <tbody>\n' +
-    '        <tr ng-repeat="key in objectKeys | orderBy:identityFn">\n' +
-    '          <td>{{key}}</td>\n' +
-    '          <td>{{service[key]}}</td>\n' +
-    '        </tr>\n' +
-    '      </tbody>\n' +
-    '    </table-->\n' +
     '      <div class="row">\n' +
     '          <div class="col-lg-6">\n' +
     '\n' +
@@ -100,17 +133,8 @@ module.run(['$templateCache', function($templateCache) {
     '                <h1 class="cf-m-pane__title">FWS</h1>\n' +
     '              </div>\n' +
     '              <div class="cf-m-pane__body-group">\n' +
-    '                <div class="cf-m-pane__body-section--bordered">\n' +
-    '                  Section one\n' +
-    '                </div>\n' +
-    '                <div class="cf-m-pane__body-section--bordered">\n' +
-    '                  Section two\n' +
-    '                </div>\n' +
-    '                <div class="cf-m-pane__body-section--bordered">\n' +
-    '                  Section three\n' +
-    '                </div>\n' +
-    '                <div class="cf-m-pane__body-section--bordered">\n' +
-    '                  Section four\n' +
+    '                <div ng-repeat="instance in instances.fws | orderBy:\'url\' track by instance.url" class="cf-m-pane__body-section--bordered">\n' +
+    '                  {{instance.url}}\n' +
     '                </div>\n' +
     '              </div>\n' +
     '            </div>\n' +
@@ -122,17 +146,8 @@ module.run(['$templateCache', function($templateCache) {
     '                <h1 class="cf-m-pane__title">UAT</h1>\n' +
     '              </div>\n' +
     '              <div class="cf-m-pane__body-group">\n' +
-    '                <div class="cf-m-pane__body-section">\n' +
-    '                  Section one\n' +
-    '                </div>\n' +
-    '                <div class="cf-m-pane__body-section">\n' +
-    '                  Section two\n' +
-    '                </div>\n' +
-    '                <div class="cf-m-pane__body-section">\n' +
-    '                  Section three\n' +
-    '                </div>\n' +
-    '                <div class="cf-m-pane__body-section">\n' +
-    '                  Section four\n' +
+    '                <div ng-repeat="instance in instances.uat | orderBy:\'url\' track by instance.url" class="cf-m-pane__body-section--bordered">\n' +
+    '                  {{instance.url}}\n' +
     '                </div>\n' +
     '              </div>\n' +
     '            </div>\n' +
@@ -143,17 +158,8 @@ module.run(['$templateCache', function($templateCache) {
     '                <h1 class="cf-m-pane__title">Prod</h1>\n' +
     '              </div>\n' +
     '              <div class="cf-m-pane__body-group">\n' +
-    '                <div class="cf-m-pane__body-section">\n' +
-    '                  Section one\n' +
-    '                </div>\n' +
-    '                <div class="cf-m-pane__body-section">\n' +
-    '                  Section two\n' +
-    '                </div>\n' +
-    '                <div class="cf-m-pane__body-section">\n' +
-    '                  Section three\n' +
-    '                </div>\n' +
-    '                <div class="cf-m-pane__body-section">\n' +
-    '                  Section four\n' +
+    '                <div ng-repeat="instance in instances.prod | orderBy:\'url\' track by instance.url" class="cf-m-pane__body-section--bordered">\n' +
+    '                  {{instance.url}}\n' +
     '                </div>\n' +
     '              </div>\n' +
     '            </div>\n' +
@@ -360,7 +366,7 @@ angular.module('slb.module')
 .factory('pathSvc', function() {
 
   var keyPrefix = '/v1/services/',
-      statsPrefix = '/v1/instances/',
+      instancesPrefix = '/v1/instances/',
       servicePrefix = '/v1/service/';
 
   return {
@@ -421,6 +427,10 @@ angular.module('slb.module')
       return '/' + this.clean(servicePrefix) + '/' + name + '/' + namespace.replace(/\//g, '_');
     },
 
+    getInstancesPath: function() {
+      return '/' + this.clean(instancesPrefix);
+    },
+
     getHost: function() {
       return "http://127.0.0.1:8088";
     }
@@ -460,10 +470,33 @@ angular.module('slb.module')
     });
   }
 
+  function fetchInstances() {
+    return $http.get(pathSvc.getHost() + pathSvc.getInstancesPath(), {
+      supressNotifications: true
+    })
+    .then(function(resp) {
+      return resp.data.instances;
+    });
+  }
+
+  function checkHealth(url) {
+
+  }
+
+  function dropOut(ip) {
+
+  }
+
   return {
     fetchServicesList: fetchServicesList,
 
     fetchServiceInstances: fetchServiceInstances,
+
+    fetchInstances: fetchInstances,
+
+    checkHealth: checkHealth,
+
+    dropOut: dropOut,
 
     create: createNode,
 
@@ -479,30 +512,19 @@ angular.module('slb.module')
 angular.module('slb.page')
 .controller('InstancesCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc) {
 
-  $scope.currPath = '/';
-  $scope.currNode = null;
-
-  $scope.truncateKey = function(key) {
-      return pathSvc.tail(key);
-  };
-
-  $scope.fetchService = function() {
-    return slbApiSvc.fetch().
-      then(function(service) {
-        $scope.service = service;
+  $scope.fetchInstances = function() {
+    return slbApiSvc.fetchInstances().
+      then(function(instances) {
+        $scope.instances = instances;
     });
   };
 
-  $scope.openCreateModal = function() {
-
-  };
-
-  $scope.rowClick = function(service) {
+  $scope.rowClick = function(instances) {
 
   };
 
   pollerSvc.register('instancesPoller', {
-    fn: $scope.fetchService,
+    fn: $scope.fetchInstances,
     scope: $scope,
     interval: 60 * 1000
   });
@@ -551,6 +573,7 @@ angular.module('slb.page')
 
   slbApiSvc.fetchServiceInstances(service)
         .then(function(instances) {
+          $scope.instances = instances;
         });
 
   $scope.close = function() {

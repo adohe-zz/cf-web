@@ -33,10 +33,18 @@ angular.module('slb.module')
   function fetchInstances() {
     return $http.get(pathSvc.getHost() + pathSvc.getInstancesPath(), {
       supressNotifications: true
-    }
+    })
     .then(function(resp) {
       return resp.data.instances;
     });
+  }
+
+  function checkHealth(url) {
+
+  }
+
+  function dropOut(ip) {
+
   }
 
   return {
@@ -45,6 +53,10 @@ angular.module('slb.module')
     fetchServiceInstances: fetchServiceInstances,
 
     fetchInstances: fetchInstances,
+
+    checkHealth: checkHealth,
+
+    dropOut: dropOut,
 
     create: createNode,
 

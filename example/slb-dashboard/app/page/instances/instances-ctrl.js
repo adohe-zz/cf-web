@@ -4,18 +4,18 @@ angular.module('slb.page')
 .controller('InstancesCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc) {
 
   $scope.fetchInstances = function() {
-    return slbApiSvc.fetch().
-      then(function(service) {
-        $scope.service = service;
+    return slbApiSvc.fetchInstances().
+      then(function(instances) {
+        $scope.instances = instances;
     });
   };
 
-  $scope.rowClick = function(service) {
+  $scope.rowClick = function(instances) {
 
   };
 
   pollerSvc.register('instancesPoller', {
-    fn: $scope.fetchService,
+    fn: $scope.fetchInstances,
     scope: $scope,
     interval: 60 * 1000
   });

@@ -82,12 +82,13 @@ module.exports = function(app) {
                     };
                     var req = http.request(util.merge(fwsOptions, options), function(resp) {
                         var data = [];
+
                         resp.on('data', function(chunk) {
                             data.push(chunk);
                         });
                         resp.on('end', function() {
-                          console.log(data.join(''));
-                          cb(null, data);
+                            var instances = JSON.parse(data.join('')).instances;
+                            cb(null, instances);
                         });
                     });
                     req.on('error', function(e) {
@@ -106,12 +107,13 @@ module.exports = function(app) {
                     };
                     var req = http.request(util.merge(uatOptions, options), function(resp) {
                         var data = [];
+
                         resp.on('data', function(chunk) {
                             data.push(chunk);
                         });
                         resp.on('end', function() {
-                          console.log(data.join(''));
-                          cb(null, data);
+                            var instances = JSON.parse(data.join('')).instances;
+                            cb(null, instances);
                         });
                     });
                     req.on('error', function(e) {
@@ -130,12 +132,13 @@ module.exports = function(app) {
                     };
                     var req = http.request(util.merge(prodOptions, options), function(resp) {
                         var data = [];
+
                         resp.on('data', function(chunk) {
                             data.push(chunk);
                         });
                         resp.on('end', function() {
-                          console.log(data.join(''));
-                          cb(null, data);
+                            var instances = JSON.parse(data.join('')).instances;
+                            cb(null, instances);
                         });
                     });
                     req.on('error', function(e) {
@@ -146,8 +149,20 @@ module.exports = function(app) {
                 }
             },
             function(err, results) {
-              res.writeHead(200);
-              res.end();
+                if(err) {
+                    res.writeHead(500);
+                    res.end();
+                } else {
+                    console.log(results);
+                    var resBody = {
+                        'instances': results
+                    };
+                    res.writeHead(200, {
+                        'Content-Type': 'application/json'
+                    });
+                    res.write(JSON.stringify(resBody));
+                    res.end();
+                }
             });
         }
     });
@@ -156,14 +171,23 @@ module.exports = function(app) {
     app.get('/v1/instances', function(req, res) {
         async.parallel({
             fws: function(cb) {
-                http.get('http://etcd.localhost.com/v2/keys/soa4j/@servers', function(resp) {
+                http.get('http://etcd.localhost/v2/keys/soa4j/@servers', function(resp) {
                     var data = [];
+
                     resp.on('data', function(chunk) {
                         data.push(chunk);
                     });
                     resp.on('end', function() {
                         var nodes = JSON.parse(data.join('')).node.nodes;
-                        cb(null, nodes);
+                        if(nodes === undefined) {
+                            nodes = [];
+                        }
+                        var servers = [];
+                        for(var i in nodes) {
+                            var node = nodes[i];
+                            servers.push(node.key.substring(node.key.lastIndexOf('/') + 1));
+                        }
+                        cb(null, servers);
                     });
                 }).on('error', function(e) {
                     cb(e, null)
@@ -172,34 +196,58 @@ module.exports = function(app) {
             uat: function(cb) {
                 http.get('http://etcd.localhost.com/v2/keys/soa4j/@servers', function(resp) {
                     var data = [];
+
                     resp.on('data', function(chunk) {
                         data.push(chunk);
                     });
                     resp.on('end', function() {
                         var nodes = JSON.parse(data.join('')).node.nodes;
-                        cb(null, nodes);
+                        if(nodes === undefined) {
+                            nodes = [];
+                        }
+                        var servers = [];
+                        for(var i in nodes) {
+                            var node = nodes[i];
+                            servers.push(node.key.substring(node.key.lastIndexOf('/') + 1));
+                        }
+                        cb(null, servers);
                     });
                 });
             },
             prod: function(cb) {
-                http.get('http://etcd.localhost.com/v2/keys/soa4j/@servers', function(resp) {
+                http.get('http://localhost.com/v2/keys/soa4j/@servers', function(resp) {
                         var data = [];
+
                         resp.on('data', function(chunk) {
                             data.push(chunk);
                         });
                         resp.on('end', function() {
                             var nodes = JSON.parse(data.join('')).node.nodes;
-                            cb(null, nodes);
+                            if(nodes === undefined) {
+                                nodes = [];
+                            }
+                            var servers = [];
+                            for(var i in nodes) {
+                                var node = nodes[i];
+                                servers.push(node.key.substring(node.key.lastIndexOf('/') + 1));
+                            }
+                            cb(null, servers);
                         });
                 });
             }
-        }, 
+        },
         function(e, results) {
             if(e) {
                 res.writeHead(500);
                 res.end();
             } else {
-                res.writeHead(200);
+                var resBody = {
+                    'instances': results
+                };
+                res.writeHead(200, {
+                    'Content-Type': 'application/json'
+                });
+                res.write(JSON.stringify(resBody));
                 res.end();
             }
         });
