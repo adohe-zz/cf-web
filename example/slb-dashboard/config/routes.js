@@ -66,7 +66,7 @@ module.exports = function(app) {
                 path: '/registry-service/getserviceinstances',
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/bjjson'
                 }
             };
             async.parallel({
@@ -75,7 +75,7 @@ module.exports = function(app) {
                     fwsBody["subEnv"] = "fws";
                     var b = JSON.stringify(fwsBody);
                     var fwsOptions = {
-                        hostname: '',
+                        hostname: 'localhost',
                         headers: {
                             'Content-Length': Buffer.byteLength(b)
                         }
@@ -88,6 +88,9 @@ module.exports = function(app) {
                         });
                         resp.on('end', function() {
                             var instances = JSON.parse(data.join('')).instances;
+                            if(instances === undefined) {
+                                instances = [];
+                            }
                             cb(null, instances);
                         });
                     });
@@ -100,7 +103,7 @@ module.exports = function(app) {
                 uat: function(cb) {
                     var b = JSON.stringify(body);
                     var uatOptions = {
-                        hostname: '',
+                        hostname: 'localhost',
                         headers: {
                             'Content-Length': Buffer.byteLength(b)
                         }
@@ -113,6 +116,9 @@ module.exports = function(app) {
                         });
                         resp.on('end', function() {
                             var instances = JSON.parse(data.join('')).instances;
+                            if(instances === undefined) {
+                                instances = [];
+                            }
                             cb(null, instances);
                         });
                     });
@@ -125,7 +131,7 @@ module.exports = function(app) {
                 prod: function(cb) {
                     var b = JSON.stringify(body);
                     var prodOptions = {
-                        hostname: '',
+                        hostname: 'localhost',
                         headers: {
                             'Content-Length': Buffer.byteLength(b)
                         }
@@ -138,6 +144,9 @@ module.exports = function(app) {
                         });
                         resp.on('end', function() {
                             var instances = JSON.parse(data.join('')).instances;
+                            if(instances === undefined) {
+                                instances = [];
+                            }
                             cb(null, instances);
                         });
                     });
@@ -153,7 +162,6 @@ module.exports = function(app) {
                     res.writeHead(500);
                     res.end();
                 } else {
-                    console.log(results);
                     var resBody = {
                         'instances': results
                     };

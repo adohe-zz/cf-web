@@ -1,4 +1,4 @@
-<div class="ed-p-node-info">
+<div class="ed-p-service-info">
 
   <div class="modal-header">
     <h4 class="modal-title">Service Details</h4>
@@ -6,41 +6,120 @@
 
   <div class="modal-body">
       <div class="row">
-          <div class="col-lg-6">
-
-            <div class="cf-m-pane">
-              <div class="cf-m-pane__heading--bordered">
-                <h1 class="cf-m-pane__title">FWS</h1>
-              </div>
-              <div class="cf-m-pane__body-group">
-                <div ng-repeat="instance in instances.fws | orderBy:'url' track by instance.url" class="cf-m-pane__body-section--bordered">
-                  {{instance.url}}
+          <div class="col-lg-12">
+            <div class="panel cf-m-panel cf-fx-box-shadow-heavy">
+              <div class="panel-body">
+                <div class="ed-p-instances__env-container">
+                  <h2>FWS</h2>
                 </div>
+
+                <h2>Instances</h2>
+                <table class="table cf-m-table">
+                  <thead>
+                    <tr>
+                      <th>URL</th>
+                      <th>Status</th>
+                      <th>&nbsp;</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="instance in instances.fws | orderBy:'url' track by instance.url">
+                      <td>
+                        <a href="#" ng-bind="instance.url"></a>
+                      </td>
+                      <td>
+                        <span ng-highlight="instance.status">{{instance.status}}</span>
+                      </td>
+                      <td>
+                        <a ng-click="checkHealth(instance)" href="#" class="cf-m-primary-action">
+                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Check Health</a>
+                      </td>
+                      <td>
+                        <a ng-click="dropOut(instance)" href="#" class="cf-m-primary-action">
+                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Drop out</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
-
           </div>
-          <div class="col-lg-6">
-            <div class="cf-m-pane">
-              <div class="cf-m-pane__heading--bordered">
-                <h1 class="cf-m-pane__title">UAT</h1>
-              </div>
-              <div class="cf-m-pane__body-group">
-                <div ng-repeat="instance in instances.uat | orderBy:'url' track by instance.url" class="cf-m-pane__body-section--bordered">
-                  {{instance.url}}
+          <div class="col-lg-12">
+            <div class="panel cf-m-panel cf-fx-box-shadow-heavy">
+              <div class="panel-body">
+                <div class="ed-p-instances__env-container">
+                  <h2>UAT</h2>
                 </div>
+
+                <h2>Instances</h2>
+                <table class="table cf-m-table">
+                  <thead>
+                    <tr>
+                      <th>URL</th>
+                      <th>Status</th>
+                      <th>&nbsp;</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="instance in instances.uat | orderBy:'url' track by instance.url">
+                      <td>
+                        <a href="#" ng-bind="instance.url"></a>
+                      </td>
+                      <td>
+                        <span ng-highlight="instance.status">{{instance.status}}</span>
+                      </td>
+                      <td>
+                        <a ng-click="checkHealth(instance)" href="#" class="cf-m-primary-action">
+                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Check Health</a>
+                      </td>
+                      <td>
+                        <a ng-click="dropOut(instance)" href="#" class="cf-m-primary-action">
+                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Drop out</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
-          <div class="col-lg-6">
-            <div class="cf-m-pane">
-              <div class="cf-m-pane__heading--bordered">
-                <h1 class="cf-m-pane__title">Prod</h1>
-              </div>
-              <div class="cf-m-pane__body-group">
-                <div ng-repeat="instance in instances.prod | orderBy:'url' track by instance.url" class="cf-m-pane__body-section--bordered">
-                  {{instance.url}}
+          <div class="col-lg-12">
+            <div class="panel cf-m-panel cf-fx-box-shadow-heavy">
+              <div class="panel-body">
+                <div class="ed-p-instances__env-container">
+                  <h2>PROD</h2>
                 </div>
+
+                <h2>Instances</h2>
+                <table class="table cf-m-table">
+                  <thead>
+                    <tr>
+                      <th>URL</th>
+                      <th>Status</th>
+                      <th>&nbsp;</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="instance in instances.prod | orderBy:'url' track by instance.url">
+                      <td>
+                        <a href="#" ng-bind="instance.url"></a>
+                      </td>
+                      <td>
+                        <span ng-highlight="instance.status">{{instance.status}}</span>
+                      </td>
+                      <td>
+                        <a ng-click="checkHealth(instance)" href="#" class="cf-m-primary-action">
+                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Check Health</a>
+                      </td>
+                      <td>
+                        <a ng-click="dropOut(instance)" href="#" class="cf-m-primary-action">
+                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Drop out</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

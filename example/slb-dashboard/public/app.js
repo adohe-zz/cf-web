@@ -118,7 +118,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/page/service/service-info.html',
-    '<div class="ed-p-node-info">\n' +
+    '<div class="ed-p-service-info">\n' +
     '\n' +
     '  <div class="modal-header">\n' +
     '    <h4 class="modal-title">Service Details</h4>\n' +
@@ -126,41 +126,120 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '  <div class="modal-body">\n' +
     '      <div class="row">\n' +
-    '          <div class="col-lg-6">\n' +
-    '\n' +
-    '            <div class="cf-m-pane">\n' +
-    '              <div class="cf-m-pane__heading--bordered">\n' +
-    '                <h1 class="cf-m-pane__title">FWS</h1>\n' +
-    '              </div>\n' +
-    '              <div class="cf-m-pane__body-group">\n' +
-    '                <div ng-repeat="instance in instances.fws | orderBy:\'url\' track by instance.url" class="cf-m-pane__body-section--bordered">\n' +
-    '                  {{instance.url}}\n' +
+    '          <div class="col-lg-12">\n' +
+    '            <div class="panel cf-m-panel cf-fx-box-shadow-heavy">\n' +
+    '              <div class="panel-body">\n' +
+    '                <div class="ed-p-instances__env-container">\n' +
+    '                  <h2>FWS</h2>\n' +
     '                </div>\n' +
+    '\n' +
+    '                <h2>Instances</h2>\n' +
+    '                <table class="table cf-m-table">\n' +
+    '                  <thead>\n' +
+    '                    <tr>\n' +
+    '                      <th>URL</th>\n' +
+    '                      <th>Status</th>\n' +
+    '                      <th>&nbsp;</th>\n' +
+    '                      <th>&nbsp;</th>\n' +
+    '                    </tr>\n' +
+    '                  </thead>\n' +
+    '                  <tbody>\n' +
+    '                    <tr ng-repeat="instance in instances.fws | orderBy:\'url\' track by instance.url">\n' +
+    '                      <td>\n' +
+    '                        <a href="#" ng-bind="instance.url"></a>\n' +
+    '                      </td>\n' +
+    '                      <td>\n' +
+    '                        <span ng-highlight="instance.status">{{instance.status}}</span>\n' +
+    '                      </td>\n' +
+    '                      <td>\n' +
+    '                        <a ng-click="checkHealth(instance)" href="#" class="cf-m-primary-action">\n' +
+    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Check Health</a>\n' +
+    '                      </td>\n' +
+    '                      <td>\n' +
+    '                        <a ng-click="dropOut(instance)" href="#" class="cf-m-primary-action">\n' +
+    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Drop out</a>\n' +
+    '                      </td>\n' +
+    '                    </tr>\n' +
+    '                  </tbody>\n' +
+    '                </table>\n' +
     '              </div>\n' +
     '            </div>\n' +
-    '\n' +
     '          </div>\n' +
-    '          <div class="col-lg-6">\n' +
-    '            <div class="cf-m-pane">\n' +
-    '              <div class="cf-m-pane__heading--bordered">\n' +
-    '                <h1 class="cf-m-pane__title">UAT</h1>\n' +
-    '              </div>\n' +
-    '              <div class="cf-m-pane__body-group">\n' +
-    '                <div ng-repeat="instance in instances.uat | orderBy:\'url\' track by instance.url" class="cf-m-pane__body-section--bordered">\n' +
-    '                  {{instance.url}}\n' +
+    '          <div class="col-lg-12">\n' +
+    '            <div class="panel cf-m-panel cf-fx-box-shadow-heavy">\n' +
+    '              <div class="panel-body">\n' +
+    '                <div class="ed-p-instances__env-container">\n' +
+    '                  <h2>UAT</h2>\n' +
     '                </div>\n' +
+    '\n' +
+    '                <h2>Instances</h2>\n' +
+    '                <table class="table cf-m-table">\n' +
+    '                  <thead>\n' +
+    '                    <tr>\n' +
+    '                      <th>URL</th>\n' +
+    '                      <th>Status</th>\n' +
+    '                      <th>&nbsp;</th>\n' +
+    '                      <th>&nbsp;</th>\n' +
+    '                    </tr>\n' +
+    '                  </thead>\n' +
+    '                  <tbody>\n' +
+    '                    <tr ng-repeat="instance in instances.uat | orderBy:\'url\' track by instance.url">\n' +
+    '                      <td>\n' +
+    '                        <a href="#" ng-bind="instance.url"></a>\n' +
+    '                      </td>\n' +
+    '                      <td>\n' +
+    '                        <span ng-highlight="instance.status">{{instance.status}}</span>\n' +
+    '                      </td>\n' +
+    '                      <td>\n' +
+    '                        <a ng-click="checkHealth(instance)" href="#" class="cf-m-primary-action">\n' +
+    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Check Health</a>\n' +
+    '                      </td>\n' +
+    '                      <td>\n' +
+    '                        <a ng-click="dropOut(instance)" href="#" class="cf-m-primary-action">\n' +
+    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Drop out</a>\n' +
+    '                      </td>\n' +
+    '                    </tr>\n' +
+    '                  </tbody>\n' +
+    '                </table>\n' +
     '              </div>\n' +
     '            </div>\n' +
     '          </div>\n' +
-    '          <div class="col-lg-6">\n' +
-    '            <div class="cf-m-pane">\n' +
-    '              <div class="cf-m-pane__heading--bordered">\n' +
-    '                <h1 class="cf-m-pane__title">Prod</h1>\n' +
-    '              </div>\n' +
-    '              <div class="cf-m-pane__body-group">\n' +
-    '                <div ng-repeat="instance in instances.prod | orderBy:\'url\' track by instance.url" class="cf-m-pane__body-section--bordered">\n' +
-    '                  {{instance.url}}\n' +
+    '          <div class="col-lg-12">\n' +
+    '            <div class="panel cf-m-panel cf-fx-box-shadow-heavy">\n' +
+    '              <div class="panel-body">\n' +
+    '                <div class="ed-p-instances__env-container">\n' +
+    '                  <h2>PROD</h2>\n' +
     '                </div>\n' +
+    '\n' +
+    '                <h2>Instances</h2>\n' +
+    '                <table class="table cf-m-table">\n' +
+    '                  <thead>\n' +
+    '                    <tr>\n' +
+    '                      <th>URL</th>\n' +
+    '                      <th>Status</th>\n' +
+    '                      <th>&nbsp;</th>\n' +
+    '                      <th>&nbsp;</th>\n' +
+    '                    </tr>\n' +
+    '                  </thead>\n' +
+    '                  <tbody>\n' +
+    '                    <tr ng-repeat="instance in instances.prod | orderBy:\'url\' track by instance.url">\n' +
+    '                      <td>\n' +
+    '                        <a href="#" ng-bind="instance.url"></a>\n' +
+    '                      </td>\n' +
+    '                      <td>\n' +
+    '                        <span ng-highlight="instance.status">{{instance.status}}</span>\n' +
+    '                      </td>\n' +
+    '                      <td>\n' +
+    '                        <a ng-click="checkHealth(instance)" href="#" class="cf-m-primary-action">\n' +
+    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Check Health</a>\n' +
+    '                      </td>\n' +
+    '                      <td>\n' +
+    '                        <a ng-click="dropOut(instance)" href="#" class="cf-m-primary-action">\n' +
+    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Drop out</a>\n' +
+    '                      </td>\n' +
+    '                    </tr>\n' +
+    '                  </tbody>\n' +
+    '                </table>\n' +
     '              </div>\n' +
     '            </div>\n' +
     '          </div>\n' +
@@ -184,7 +263,7 @@ try {
 }
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/page/service/service.html',
-    '<div class="ed-p-browser">\n' +
+    '<div class="ed-p-services">\n' +
     '\n' +
     '  <cf-nav-title title="Services"></cf-nav-title>\n' +
     '\n' +
@@ -578,6 +657,14 @@ angular.module('slb.page')
 
   $scope.close = function() {
     $modalInstance.dismiss('close');
+  };
+
+  $scope.checkHealth = function(instance) {
+    console.log('click');
+  };
+
+  $scope.dropOut = function(instance) {
+    console.log('dropout');
   };
 });
 

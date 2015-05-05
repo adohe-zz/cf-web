@@ -17,4 +17,12 @@ angular.module('slb.page')
   $scope.close = function() {
     $modalInstance.dismiss('close');
   };
+
+  $scope.checkHealth = function(instance) {
+    console.log('click');
+  };
+
+  $scope.dropOut = function(instance) {
+    console.log('dropout');
+  };
 });

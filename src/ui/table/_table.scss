@@ -1,0 +1,39 @@
+.cf-m-table-container {
+  display: block;
+  width: 100%;
+}
+
+// Set another max-width if desired.
+.cf-m-table__constrain-content {
+  max-width: 300px;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.cf-m-table {
+
+  .cf-m-table-selected-row {
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    padding-right: 15px;
+    background-color: $color-table-active;
+  }
+
+  .cf-m-table-interact-entire-element:hover {
+    cursor: pointer;
+  }
+
+}
+
+.cf-m-stacked-cell {
+
+  .cf-m-stacked-cell-secondary, .cf-m-stacked-cell-primary {
+    line-height: 20px;
+  }
+  .cf-m-stacked-cell-secondary {
+    color: $color-text-muted;
+  }
+
+}
