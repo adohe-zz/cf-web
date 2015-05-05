@@ -30,10 +30,21 @@ angular.module('slb.module')
     });
   }
 
+  function fetchInstances() {
+    return $http.get(pathSvc.getHost() + pathSvc.getInstancesPath(), {
+      supressNotifications: true
+    }
+    .then(function(resp) {
+      return resp.data.instances;
+    });
+  }
+
   return {
     fetchServicesList: fetchServicesList,
 
     fetchServiceInstances: fetchServiceInstances,
+
+    fetchInstances: fetchInstances,
 
     create: createNode,
 

@@ -1,53 +1,38 @@
-<div class="ed-p-browser">
+<div class="ed-p-instances">
+  <cf-nav-title title="Instances"></cf-nav-title>
 
-  <cf-nav-title title="Services">
-    <a ng-click="openCreateModal()" href="#" class="cf-m-primary-action">
-      <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Create Node</a>
-  </cf-nav-title>
+  <div class="row">
 
-    <div class="panel cf-m-panel cf-fx-box-shadow-heavy">
-      <div class="panel-body">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+      <div class="panel cf-m-panel cf-fx-box-shadow-heavy">
+        <div class="panel-body">
+          <div class="ed-p-instances__fws-container">
+            <h2>FWS</h2>
+          </div>
 
-        <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12">
-
-            <table class="table table-hover cf-m-table ed-m-node-table">
-              <thead>
-                <tr>
-                  <th class="ed-m-node-table__cog-col">&nbsp;</th>
-                  <th>Name</th>
-                  <th class="ed-m-node-table__value-col">Namespace</th>
-                  <th class="ed-m-node-table__ttl-col">Contacts</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="service in service.services | orderBy:'serviceName' track by service.serviceName"
-                ng-class="ed-m-node-table__node-row"
-                ng-click="rowClick(service)"
-                class="co-m-table-interact-entire-element">
+          <h2>Instances</h2>
+          <table class="table cf-m-table">
+            <thead>
+              <tr>
+                <th>IP</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="instance in instances | orderBy:'ip' track by instance.ip">
                 <td>
-                  <ed-service-cog service="service"></ed-service-cog>
+                  <a href="#" ng-click="openDetailModal(instance.ip)" ng-bind="instance.ip"></a>
                 </td>
                 <td>
-                  <span class="co-m-table__constrain-content">{{truncateKey(service.serviceName)}}</span>
-                </td>
-                <td>
-                  <div class="co-m-table__constrain-content">
-                    <span cf-highlight="service.serviceNamespace">{{service.serviceNamespace}}</span>
-                  </div>
-                </td>
-                <td>
-                  <span cf-highlight="service.serviceContacts">{{service.serviceContacts}}</span>
+                  <span>Drop out</span>
                 </td>
               </tr>
             </tbody>
           </table>
 
         </div>
-
       </div>
-
     </div>
-  </div>
 
+  </div>
 </div>

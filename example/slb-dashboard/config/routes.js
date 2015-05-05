@@ -80,12 +80,12 @@ module.exports = function(app) {
                             'Content-Length': Buffer.byteLength(b)
                         }
                     };
-                    var req = http.request(util.merge(fwsOptions, options), function(res) {
+                    var req = http.request(util.merge(fwsOptions, options), function(resp) {
                         var data = [];
-                        res.on('data', function(chunk) {
+                        resp.on('data', function(chunk) {
                             data.push(chunk);
                         });
-                        res.on('end', function() {
+                        resp.on('end', function() {
                           console.log(data.join(''));
                           cb(null, data);
                         });
@@ -104,12 +104,12 @@ module.exports = function(app) {
                             'Content-Length': Buffer.byteLength(b)
                         }
                     };
-                    var req = http.request(util.merge(uatOptions, options), function(res) {
+                    var req = http.request(util.merge(uatOptions, options), function(resp) {
                         var data = [];
-                        res.on('data', function(chunk) {
+                        resp.on('data', function(chunk) {
                             data.push(chunk);
                         });
-                        res.on('end', function() {
+                        resp.on('end', function() {
                           console.log(data.join(''));
                           cb(null, data);
                         });
@@ -125,15 +125,15 @@ module.exports = function(app) {
                     var prodOptions = {
                         hostname: '',
                         headers: {
-                            'Content-Length': Buffer.byteLength(b) 
+                            'Content-Length': Buffer.byteLength(b)
                         }
                     };
-                    var req = http.request(util.merge(prodOptions, options), function(res) {
+                    var req = http.request(util.merge(prodOptions, options), function(resp) {
                         var data = [];
-                        res.on('data', function(chunk) {
+                        resp.on('data', function(chunk) {
                             data.push(chunk);
                         });
-                        res.on('end', function() {
+                        resp.on('end', function() {
                           console.log(data.join(''));
                           cb(null, data);
                         });
@@ -150,5 +150,64 @@ module.exports = function(app) {
               res.end();
             });
         }
+    });
+
+    // Instances List API
+    app.get('/v1/instances', function(req, res) {
+        async.parallel({
+            fws: function(cb) {
+                http.get('http://etcd.localhost.com/v2/keys/soa4j/@servers', function(resp) {
+                    var data = [];
+                    resp.on('data', function(chunk) {
+                        data.push(chunk);
+                    });
+                    resp.on('end', function() {
+                        var nodes = JSON.parse(data.join('')).node.nodes;
+                        cb(null, nodes);
+                    });
+                }).on('error', function(e) {
+                    cb(e, null)
+                });
+            },
+            uat: function(cb) {
+                http.get('http://etcd.localhost.com/v2/keys/soa4j/@servers', function(resp) {
+                    var data = [];
+                    resp.on('data', function(chunk) {
+                        data.push(chunk);
+                    });
+                    resp.on('end', function() {
+                        var nodes = JSON.parse(data.join('')).node.nodes;
+                        cb(null, nodes);
+                    });
+                });
+            },
+            prod: function(cb) {
+                http.get('http://etcd.localhost.com/v2/keys/soa4j/@servers', function(resp) {
+                        var data = [];
+                        resp.on('data', function(chunk) {
+                            data.push(chunk);
+                        });
+                        resp.on('end', function() {
+                            var nodes = JSON.parse(data.join('')).node.nodes;
+                            cb(null, nodes);
+                        });
+                });
+            }
+        }, 
+        function(e, results) {
+            if(e) {
+                res.writeHead(500);
+                res.end();
+            } else {
+                res.writeHead(200);
+                res.end();
+            }
+        });
+    });
+
+    // Drop out one instance
+    app.post('/v1/instance/:env/:ip', function(req, res) {
+        var env = req.params.env,
+            ip = req.params.ip;
     });
 }

@@ -4,7 +4,7 @@ angular.module('slb.module')
 .factory('pathSvc', function() {
 
   var keyPrefix = '/v1/services/',
-      statsPrefix = '/v1/instances/',
+      instancesPrefix = '/v1/instances/',
       servicePrefix = '/v1/service/';
 
   return {
@@ -64,6 +64,10 @@ angular.module('slb.module')
     getServiceInstancesPath: function(name, namespace) {
       return '/' + this.clean(servicePrefix) + '/' + name + '/' + namespace.replace(/\//g, '_');
     },
+
+    getInstancesPath: function() {
+      return '/' + this.clean(instancesPrefix);
+    }
 
     getHost: function() {
       return "http://127.0.0.1:8088";
