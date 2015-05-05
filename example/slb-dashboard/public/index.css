@@ -5741,6 +5741,24 @@ html, body {
     -o-transform: scale(1, 1);
     transform: scale(1, 1); } }
 
+.cf-m-page-title {
+  color: white;
+  font-weight: 400;
+  letter-spacing: -.03em;
+  text-align: center;
+  margin: 0;
+  line-height: inherit;
+  font-size: 225%; }
+
+.cf-m-dropdown--dark {
+  background-color: rgba(33, 33, 33, 0.95);
+  border: solid 1px rgba(33, 33, 33, 0.95); }
+  .cf-m-dropdown--dark > li > a {
+    color: white; }
+    .cf-m-dropdown--dark > li > a:hover {
+      background-color: rgba(33, 33, 33, 0.95);
+      color: white; }
+
 /* FONT PATH
  * -------------------------- */
 @font-face {
