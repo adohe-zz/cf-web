@@ -53,11 +53,10 @@ module.exports = function(app) {
         var name = req.params.name,
             namespace = req.params.namespace,
             body = {
-                'serviceName': name,
-                'serviceNamespace': namespace.replace(/_/g, '/'),
+                "serviceName": name,
+                "serviceNamespace": namespace.replace(/_/g, '/'),
             };
 
-        console.log(req.params);
         if(util.isEmpty(name) || util.isEmpty(namespace)) {
             res.writeHead(500);
             res.end();
@@ -74,75 +73,75 @@ module.exports = function(app) {
                 fws: function(cb) {
                     var fwsBody = body;
                     fwsBody["subEnv"] = "fws";
+                    var b = JSON.stringify(fwsBody);
                     var fwsOptions = {
                         hostname: '',
                         headers: {
-                            'Content-Length': querystring.stringify(fwsBody).length
+                            'Content-Length': Buffer.byteLength(b)
                         }
                     };
                     var req = http.request(util.merge(fwsOptions, options), function(res) {
-                        var data = '';
-                        res.setEncoding('utf8');
+                        var data = [];
                         res.on('data', function(chunk) {
-                            data += chunk;
+                            data.push(chunk);
                         });
                         res.on('end', function() {
-                          console.log(data);
+                          console.log(data.join(''));
                           cb(null, data);
                         });
                     });
                     req.on('error', function(e) {
                         cb(e, null);
                     });
-                    req.write(querystring.stringify(fwsBody));
+                    req.write(b);
                     req.end();
                 },
                 uat: function(cb) {
+                    var b = JSON.stringify(body);
                     var uatOptions = {
                         hostname: '',
                         headers: {
-                            'Content-Length': querystring.stringify(body).length
+                            'Content-Length': Buffer.byteLength(b)
                         }
                     };
                     var req = http.request(util.merge(uatOptions, options), function(res) {
-                        var data = '';
-                        res.setEnconding('utf8');
+                        var data = [];
                         res.on('data', function(chunk) {
-                            data += chunk;
+                            data.push(chunk);
                         });
                         res.on('end', function() {
-                          console.log(data);
+                          console.log(data.join(''));
                           cb(null, data);
                         });
                     });
                     req.on('error', function(e) {
                         cb(e, null);
                     });
-                    req.write(querystring.stringify(body));
+                    req.write(b);
                     req.end();
                 },
                 prod: function(cb) {
+                    var b = JSON.stringify(body);
                     var prodOptions = {
                         hostname: '',
                         headers: {
-                            'Content-Length': querystring.stringify(body).length
+                            'Content-Length': Buffer.byteLength(b) 
                         }
                     };
                     var req = http.request(util.merge(prodOptions, options), function(res) {
-                        var data = '';
-                        res.setEnconding('utf8');
+                        var data = [];
                         res.on('data', function(chunk) {
-                            data += chunk;
+                            data.push(chunk);
                         });
                         res.on('end', function() {
-                          console.log(data);
+                          console.log(data.join(''));
                           cb(null, data);
                         });
                     });
                     req.on('error', function(e) {
                         cb(e, null);
                     });
-                    req.write(querystring.stringify(body));
+                    req.write(b);
                     req.end();
                 }
             },
