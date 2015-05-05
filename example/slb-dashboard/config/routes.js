@@ -1,6 +1,6 @@
 var http = require('http'),
     async = require('async'),
-    querystring = require('querystring'),
+    request = require('request'),
     util = require('../util/util');
 
 /**
@@ -275,18 +275,16 @@ module.exports = function(app) {
     app.delete('/v1/instance/:env/:ip', function(req, res) {
         var env = req.params.env,
             ip = req.params.ip;
-        
+
         var options = {
-            hostname: '',
-            port: '80',
-            path: '',
-            method: 'DELETE'
+          uri: '',
+          method: 'PUT',
+          form: {
+            'value': 'Down'
+          }
         };
 
-        var req = http.request(options, function(resp) {
-            var data = [];
-
-
+        request(options, function(err, resp, body) {
         });
     });
 
