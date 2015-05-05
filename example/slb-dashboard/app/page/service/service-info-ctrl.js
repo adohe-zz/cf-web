@@ -19,7 +19,10 @@ angular.module('slb.page')
   };
 
   $scope.checkHealth = function(instance) {
-    console.log('click');
+    slbApiSvc.checkHealth(instance.url).
+          then(function(status) {
+            console.log(status.ack);
+          });
   };
 
   $scope.dropOut = function(instance) {

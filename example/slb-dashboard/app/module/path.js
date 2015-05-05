@@ -5,7 +5,8 @@ angular.module('slb.module')
 
   var keyPrefix = '/v1/services/',
       instancesPrefix = '/v1/instances/',
-      servicePrefix = '/v1/service/';
+      servicePrefix = '/v1/service/',
+      instancePrefix = '/v1/instance/';
 
   return {
 
@@ -67,6 +68,14 @@ angular.module('slb.module')
 
     getInstancesPath: function() {
       return '/' + this.clean(instancesPrefix);
+    },
+
+    getInstancePath: function() {
+      return '/' + this.clean(instancePrefix);
+    },
+
+    getDropOutInstancePath: function(env, ip) {
+      return '/' + this.clean(instancePrefix) + '/' + env + '/' + ip.replace(/./g, '_');
     },
 
     getHost: function() {

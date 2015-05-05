@@ -19,7 +19,8 @@ module.exports = function(app) {
 
     app.all('/v1/*', function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "X-Requested-With");
+        res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+        res.header("Access-Control-Allow-Headers", "Content-Type");
         next();
     });
 
@@ -91,6 +92,9 @@ module.exports = function(app) {
                             if(instances === undefined) {
                                 instances = [];
                             }
+                            for(var i in instances) {
+                              instances[i]["env"] = "fws";
+                            }
                             cb(null, instances);
                         });
                     });
@@ -119,6 +123,9 @@ module.exports = function(app) {
                             if(instances === undefined) {
                                 instances = [];
                             }
+                            for(var i in instances) {
+                              instances[i]["env"] = "uat";
+                            }
                             cb(null, instances);
                         });
                     });
@@ -146,6 +153,9 @@ module.exports = function(app) {
                             var instances = JSON.parse(data.join('')).instances;
                             if(instances === undefined) {
                                 instances = [];
+                            }
+                            for(var i in instances) {
+                              instances[i]["env"] = "prod";
                             }
                             cb(null, instances);
                         });
@@ -262,8 +272,46 @@ module.exports = function(app) {
     });
 
     // Drop out one instance
-    app.post('/v1/instance/:env/:ip', function(req, res) {
+    app.delete('/v1/instance/:env/:ip', function(req, res) {
         var env = req.params.env,
             ip = req.params.ip;
+        
+        var options = {
+            hostname: '',
+            port: '80',
+            path: '',
+            method: 'DELETE'
+        };
+
+        var req = http.request(options, function(resp) {
+            var data = [];
+
+
+        });
+    });
+
+    // Check Health API
+    app.post('/v1/instance/', function(req, res) {
+        var url = req.body.url,
+            newUrl = url + 'checkhealth.bjjson';
+
+        http.get(newUrl, function(resp) {
+            var data = [];
+
+            resp.on('data', function(chunk) {
+                data.push(chunk);
+            });
+            resp.on('end', function() {
+                var responseStatus = JSON.parse(data.join('')).responseStatus;
+                var result = {
+                    'status': responseStatus
+                };
+                res.writeHead(200, {
+                    'Content-Type': 'application/json'
+                });
+                res.write(JSON.stringify(result));
+                res.end();
+            });
+        });
     });
 }

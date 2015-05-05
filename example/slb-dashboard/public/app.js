@@ -149,7 +149,7 @@ module.run(['$templateCache', function($templateCache) {
     '                        <a href="#" ng-bind="instance.url"></a>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
-    '                        <span ng-highlight="instance.status">{{instance.status}}</span>\n' +
+    '                        <span ng-highlight="instance.env">{{instance.env}}</span>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
     '                        <a ng-click="checkHealth(instance)" href="#" class="cf-m-primary-action">\n' +
@@ -227,7 +227,7 @@ module.run(['$templateCache', function($templateCache) {
     '                        <a href="#" ng-bind="instance.url"></a>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
-    '                        <span ng-highlight="instance.status">{{instance.status}}</span>\n' +
+    '                        <span ng-highlight="instance.env">{{instance.env}}</span>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
     '                        <a ng-click="checkHealth(instance)" href="#" class="cf-m-primary-action">\n' +
@@ -446,7 +446,8 @@ angular.module('slb.module')
 
   var keyPrefix = '/v1/services/',
       instancesPrefix = '/v1/instances/',
-      servicePrefix = '/v1/service/';
+      servicePrefix = '/v1/service/',
+      instancePrefix = '/v1/instance/';
 
   return {
 
@@ -510,6 +511,10 @@ angular.module('slb.module')
       return '/' + this.clean(instancesPrefix);
     },
 
+    getInstancePath: function() {
+      return '/' + this.clean(instancePrefix);
+    },
+
     getHost: function() {
       return "http://127.0.0.1:8088";
     }
@@ -559,7 +564,12 @@ angular.module('slb.module')
   }
 
   function checkHealth(url) {
-
+    return $http.post(pathSvc.getHost() + pathSvc.getInstancePath(), {
+      url: url
+    })
+    .then(function(resp) {
+      return resp.data.status;
+    });
   }
 
   function dropOut(ip) {
@@ -660,7 +670,10 @@ angular.module('slb.page')
   };
 
   $scope.checkHealth = function(instance) {
-    console.log('click');
+    slbApiSvc.checkHealth(instance.url).
+          then(function(status) {
+            console.log(status.ack);
+          });
   };
 
   $scope.dropOut = function(instance) {

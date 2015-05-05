@@ -40,11 +40,20 @@ angular.module('slb.module')
   }
 
   function checkHealth(url) {
-
+    return $http.post(pathSvc.getHost() + pathSvc.getInstancePath(), {
+      url: url
+    })
+    .then(function(resp) {
+      return resp.data.status;
+    });
   }
 
-  function dropOut(ip) {
-
+  function dropOut(instance) {
+    var ip = instance.url.substring(instance.url.indexOf(':') + 3, instance.url.lastIndexOf(':'));
+    console.log(ip);
+    return $http.delete(pathSvc.getHost() + pathSvc.getDropOutInstancePath(instace.env, ip))
+      .then(function(resp) {
+      });
   }
 
   return {
