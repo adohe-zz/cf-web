@@ -7106,15 +7106,15 @@ html, body {
 /* SLB DASHBOARD MODULES */
 .ed-p-services .panel-body {
   padding: 30px; }
-.ed-p-services .ed-m-node-table > thead > tr > th {
+.ed-p-services .ed-m-service-table > thead > tr > th {
   border: none; }
-.ed-p-services .ed-m-node-table__ttl-col {
+.ed-p-services .ed-m-service-table__contacts-col {
   width: 80px; }
-.ed-p-services .ed-m-node-table__cog-col {
+.ed-p-services .ed-m-service-table__cog-col {
   width: 32px; }
-.ed-p-services .ed-m-node-table__value-col {
+.ed-p-services .ed-m-service-table__namespace-col {
   width: 50%; }
-.ed-p-services .ed-m-node-table__node-row:hover {
+.ed-p-services .ed-m-service-table__node-row:hover {
   cursor: default; }
 
 .ed-m-number-input {
@@ -7127,3 +7127,8 @@ html, body {
 .ed-p-instances__env-container {
   margin-bottom: 20px;
   border-bottom: 1px solid #999; }
+
+.ed-p-instances .ed-m-instance-table > thead > tr > th {
+  border: none; }
+.ed-p-instances .ed-m-instance-table__ip-col {
+  width: 50%; }

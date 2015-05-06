@@ -76,6 +76,7 @@ module.exports = function(app) {
             };
             async.parallel({
                 fws: function(cb) {
+                    console.log('fetch fws instances');
                     var fwsBody = body;
                     fwsBody["subEnv"] = "fws";
                     var b = JSON.stringify(fwsBody);
@@ -99,6 +100,7 @@ module.exports = function(app) {
                             for(var i in instances) {
                               instances[i]["env"] = "fws";
                             }
+                            console.log(instances);
                             cb(null, instances);
                         });
                     });
@@ -109,6 +111,7 @@ module.exports = function(app) {
                     req.end();
                 },
                 uat: function(cb) {
+                    console.log('fetch uat instance');
                     var b = JSON.stringify(body);
                     var uatOptions = {
                         hostname: uris.registry.uat,
@@ -130,6 +133,7 @@ module.exports = function(app) {
                             for(var i in instances) {
                               instances[i]["env"] = "uat";
                             }
+                            console.log(instances);
                             cb(null, instances);
                         });
                     });
@@ -288,19 +292,18 @@ module.exports = function(app) {
         });
     });
 
-    // Drop out one instance
-    app.delete('/v1/instance/:env/:ip', function(req, res) {
-        var env = req.params.env,
-            ip = req.params.ip.replace(/_/g, '.');
+    // Check in on instance API
+    app.put('/v1/instance/', function(req, res) {
+        var ip = req.body.ip,
+            env = req.body.env;
 
         var rawBody = {
             "serverIp": ip,
-            "status": "Down" },
+            "status": "Up" },
             body = JSON.stringify(rawBody);
 
-        console.log(uri[env]);
         var options = {
-            hostname: uris[env],
+            hostname: uris.registry[env],
             port: 80,
             method: 'POST',
             path: '/registry-service/updateserverstatus',
@@ -317,6 +320,53 @@ module.exports = function(app) {
             });
             resp.on('end', function() {
                 var responseStatus = JSON.parse(data.join('')).responseStatus;
+                var result = {
+                    'ack': responseStatus.ack
+                };
+                res.writeHead(200, {
+                    'Content-Type': 'application/json'
+                });
+                res.write(JSON.stringify(result));
+                res.end();
+            });
+        });
+        req.on('error', function(e) {
+            res.writeHead(500);
+            res.end();
+        });
+        req.write(body);
+        req.end();
+    });
+
+    // Drop out one instance API
+    app.delete('/v1/instance/:env/:ip', function(req, res) {
+        var env = req.params.env,
+            ip = req.params.ip.replace(/_/g, '.');
+
+        var rawBody = {
+            "serverIp": ip,
+            "status": "Down" },
+            body = JSON.stringify(rawBody);
+
+        var options = {
+            hostname: uris.registry[env],
+            port: 80,
+            method: 'POST',
+            path: '/registry-service/updateserverstatus',
+            headers: {
+                'Content-Type': 'application/bjjson',
+                'Content-Length': Buffer.byteLength(body)
+            }
+        };
+        var req = http.request(options, function(resp) {
+            var data = [];
+
+            resp.on('data', function(chunk) {
+                data.push(chunk);
+            });
+            resp.on('end', function() {
+                var responseStatus = JSON.parse(data.join('')).responseStatus;
+                console.log('drop out');
                 console.log(responseStatus);
                 var result = {
                     'ack': responseStatus.ack

@@ -56,6 +56,16 @@ angular.module('slb.module')
       });
   }
 
+  function checkIn(instance) {
+    return $http.put(pathSvc.getHost() + pathSvc.getInstancePath(), {
+      ip: instance.ip,
+      env: instance.env
+    })
+    .then(function(resp) {
+      return resp.data.ack;
+    });
+  }
+
   return {
     fetchServicesList: fetchServicesList,
 
@@ -66,6 +76,8 @@ angular.module('slb.module')
     checkHealth: checkHealth,
 
     dropOut: dropOut,
+
+    checkIn: checkIn,
 
     create: createNode,
 

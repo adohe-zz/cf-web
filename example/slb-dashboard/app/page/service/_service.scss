@@ -3,23 +3,23 @@
     padding: 30px;
   }
 
-  .ed-m-node-table > thead > tr > th {
+  .ed-m-service-table > thead > tr > th {
     border: none;
   }
 
-  .ed-m-node-table__ttl-col {
+  .ed-m-service-table__contacts-col {
     width: 80px;
   }
 
-  .ed-m-node-table__cog-col {
+  .ed-m-service-table__cog-col {
     width: 32px;
   }
 
-  .ed-m-node-table__value-col {
+  .ed-m-service-table__namespace-col {
     width: 50%;
   }
 
-  .ed-m-node-table__node-row:hover {
+  .ed-m-service-table__node-row:hover {
     cursor: default;
   }
 }

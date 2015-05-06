@@ -35,6 +35,7 @@ angular.module('slb.page')
     slbApiSvc.dropOut(instance)
     .then(function(ack) {
       if(ack === 'Success') {
+        console.log('refresh');
         $scope.refreshInstances();
       } else {
         toastSvc.error("drop out failed");
@@ -43,8 +44,13 @@ angular.module('slb.page')
   };
 
   $scope.refreshInstances = function() {
-    slbApiSvc.fetchServiceInstances(service)
+    $scope.fetchInstances();
+  };
+
+  $scope.fetchInstances = function() {
+    return slbApiSvc.fetchServiceInstances(service)
     .then(function(instances) {
+      console.log(instances);
       $scope.instances = instances;
     });
   };

@@ -7,6 +7,7 @@ try {
 module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/page/instances/instances.html',
     '<div class="ed-p-instances">\n' +
+    '  <cf-toast></cf-toast>\n' +
     '  <cf-nav-title title="Instances"></cf-nav-title>\n' +
     '\n' +
     '  <div class="row">\n' +
@@ -19,10 +20,10 @@ module.run(['$templateCache', function($templateCache) {
     '          </div>\n' +
     '\n' +
     '          <h2>Instances</h2>\n' +
-    '          <table class="table cf-m-table">\n' +
+    '          <table class="table cf-m-table ed-m-instance-table">\n' +
     '            <thead>\n' +
     '              <tr>\n' +
-    '                <th>IP</th>\n' +
+    '                <th class="ed-m-instance-table__ip-col">IP</th>\n' +
     '                <th>Action</th>\n' +
     '              </tr>\n' +
     '            </thead>\n' +
@@ -50,10 +51,10 @@ module.run(['$templateCache', function($templateCache) {
     '          </div>\n' +
     '\n' +
     '          <h2>Instances</h2>\n' +
-    '          <table class="table cf-m-table">\n' +
+    '          <table class="table cf-m-table ed-m-instance-table">\n' +
     '            <thead>\n' +
     '              <tr>\n' +
-    '                <th>IP</th>\n' +
+    '                <th class="ed-m-instance-table__ip-col">IP</th>\n' +
     '                <th>Action</th>\n' +
     '              </tr>\n' +
     '            </thead>\n' +
@@ -81,10 +82,10 @@ module.run(['$templateCache', function($templateCache) {
     '          </div>\n' +
     '\n' +
     '          <h2>Instances</h2>\n' +
-    '          <table class="table cf-m-table">\n' +
+    '          <table class="table cf-m-table ed-m-instance-table">\n' +
     '            <thead>\n' +
     '              <tr>\n' +
-    '                <th>IP</th>\n' +
+    '                <th class="ed-m-instance-table__ip-col">IP</th>\n' +
     '                <th>Action</th>\n' +
     '              </tr>\n' +
     '            </thead>\n' +
@@ -193,11 +194,11 @@ module.run(['$templateCache', function($templateCache) {
     '                      </td>\n' +
     '                      <td>\n' +
     '                        <a ng-click="checkHealth(instance)" href="#" class="cf-m-primary-action">\n' +
-    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Check Health</a>\n' +
+    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Check</a>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
     '                        <a ng-click="dropOut(instance)" href="#" class="cf-m-primary-action">\n' +
-    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Drop out</a>\n' +
+    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Drop</a>\n' +
     '                      </td>\n' +
     '                    </tr>\n' +
     '                  </tbody>\n' +
@@ -232,11 +233,11 @@ module.run(['$templateCache', function($templateCache) {
     '                      </td>\n' +
     '                      <td>\n' +
     '                        <a ng-click="checkHealth(instance)" href="#" class="cf-m-primary-action">\n' +
-    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Check Health</a>\n' +
+    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Check</a>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
     '                        <a ng-click="dropOut(instance)" href="#" class="cf-m-primary-action">\n' +
-    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Drop out</a>\n' +
+    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Drop</a>\n' +
     '                      </td>\n' +
     '                    </tr>\n' +
     '                  </tbody>\n' +
@@ -274,28 +275,28 @@ module.run(['$templateCache', function($templateCache) {
     '        <div class="row">\n' +
     '          <div class="col-lg-12 col-md-12 col-sm-12">\n' +
     '\n' +
-    '            <table class="table table-hover cf-m-table ed-m-node-table">\n' +
+    '            <table class="table table-hover cf-m-table ed-m-service-table">\n' +
     '              <thead>\n' +
     '                <tr>\n' +
-    '                  <th class="ed-m-node-table__cog-col">&nbsp;</th>\n' +
+    '                  <th class="ed-m-service-table__cog-col">&nbsp;</th>\n' +
     '                  <th>ServiceName</th>\n' +
-    '                  <th class="ed-m-node-table__value-col">ServiceNamespace</th>\n' +
-    '                  <th class="ed-m-node-table__ttl-col">Contacts</th>\n' +
+    '                  <th class="ed-m-service-table__namespace-col">ServiceNamespace</th>\n' +
+    '                  <th class="ed-m-service-table__contacts-col">Contacts</th>\n' +
     '                </tr>\n' +
     '              </thead>\n' +
     '              <tbody>\n' +
     '                <tr ng-repeat="service in services | orderBy:\'serviceName\' track by service.serviceName"\n' +
-    '                ng-class="ed-m-node-table__node-row"\n' +
+    '                ng-class="ed-m-service-table__node-row"\n' +
     '                ng-click="rowClick(service)"\n' +
-    '                class="co-m-table-interact-entire-element">\n' +
+    '                class="cf-m-table-interact-entire-element">\n' +
     '                <td>\n' +
     '                  <ed-service-cog service="service"></ed-service-cog>\n' +
     '                </td>\n' +
     '                <td>\n' +
-    '                  <span class="co-m-table__constrain-content">{{truncateKey(service.serviceName)}}</span>\n' +
+    '                  <span class="cf-m-table__constrain-content">{{truncateKey(service.serviceName)}}</span>\n' +
     '                </td>\n' +
     '                <td>\n' +
-    '                  <div class="co-m-table__constrain-content">\n' +
+    '                  <div class="cf-m-table__constrain-content">\n' +
     '                    <span cf-highlight="service.serviceNamespace">{{service.serviceNamespace}}</span>\n' +
     '                  </div>\n' +
     '                </td>\n' +
@@ -585,6 +586,16 @@ angular.module('slb.module')
       });
   }
 
+  function checkIn(instance) {
+    return $http.put(pathSvc.getHost() + pathSvc.getInstancePath(), {
+      ip: instance.ip,
+      env: instance.env
+    })
+    .then(function(resp) {
+      return resp.data.ack;
+    });
+  }
+
   return {
     fetchServicesList: fetchServicesList,
 
@@ -595,6 +606,8 @@ angular.module('slb.module')
     checkHealth: checkHealth,
 
     dropOut: dropOut,
+
+    checkIn: checkIn,
 
     create: createNode,
 
@@ -615,7 +628,9 @@ angular.module('slb.module').constant('SLB_EVENT', {
 'use strict';
 
 angular.module('slb.page')
-.controller('InstancesCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc) {
+.controller('InstancesCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc, toastSvc) {
+
+  $scope.toastSvc = toastSvc;
 
   $scope.fetchInstances = function() {
     return slbApiSvc.fetchInstances().
@@ -629,6 +644,21 @@ angular.module('slb.page')
   };
 
   $scope.checkIn = function(instance) {
+    slbApiSvc.checkIn(instance)
+      .then(function(ack) {
+        if(ack === 'Success') {
+          $scope.refreshInstances();
+        } else {
+          toastSvc.error('request error');
+        }
+      });
+  };
+
+  $scope.refreshInstances = function() {
+      slbApiSvc.fetchInstances()
+        .then(function(instances) {
+          $scope.instances = instances;
+        });
   };
 
   pollerSvc.register('instancesPoller', {
@@ -705,6 +735,7 @@ angular.module('slb.page')
     slbApiSvc.dropOut(instance)
     .then(function(ack) {
       if(ack === 'Success') {
+        console.log('refresh');
         $scope.refreshInstances();
       } else {
         toastSvc.error("drop out failed");
@@ -713,8 +744,13 @@ angular.module('slb.page')
   };
 
   $scope.refreshInstances = function() {
-    slbApiSvc.fetchServiceInstances(service)
+    $scope.fetchInstances();
+  };
+
+  $scope.fetchInstances = function() {
+    return slbApiSvc.fetchServiceInstances(service)
     .then(function(instances) {
+      console.log(instances);
       $scope.instances = instances;
     });
   };

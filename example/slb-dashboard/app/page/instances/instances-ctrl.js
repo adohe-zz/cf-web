@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('slb.page')
-.controller('InstancesCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc) {
+.controller('InstancesCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc, toastSvc) {
+
+  $scope.toastSvc = toastSvc;
 
   $scope.fetchInstances = function() {
     return slbApiSvc.fetchInstances().
@@ -15,6 +17,21 @@ angular.module('slb.page')
   };
 
   $scope.checkIn = function(instance) {
+    slbApiSvc.checkIn(instance)
+      .then(function(ack) {
+        if(ack === 'Success') {
+          $scope.refreshInstances();
+        } else {
+          toastSvc.error('request error');
+        }
+      });
+  };
+
+  $scope.refreshInstances = function() {
+      slbApiSvc.fetchInstances()
+        .then(function(instances) {
+          $scope.instances = instances;
+        });
   };
 
   pollerSvc.register('instancesPoller', {
