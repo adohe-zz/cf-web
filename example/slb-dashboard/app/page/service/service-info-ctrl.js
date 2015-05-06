@@ -32,6 +32,20 @@ angular.module('slb.page')
   };
 
   $scope.dropOut = function(instance) {
-    console.log('dropout');
+    slbApiSvc.dropOut(instance)
+    .then(function(ack) {
+      if(ack === 'Success') {
+        $scope.refreshInstances();
+      } else {
+        toastSvc.error("drop out failed");
+      }
+    });
+  };
+
+  $scope.refreshInstances = function() {
+    slbApiSvc.fetchServiceInstances(service)
+    .then(function(instances) {
+      $scope.instances = instances;
+    });
   };
 });

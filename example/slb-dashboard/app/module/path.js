@@ -75,7 +75,7 @@ angular.module('slb.module')
     },
 
     getDropOutInstancePath: function(env, ip) {
-      return '/' + this.clean(instancePrefix) + '/' + env + '/' + ip.replace(/./g, '_');
+      return '/' + this.clean(instancePrefix) + '/' + env + '/' + ip.replace(/\./g, '_');
     },
 
     getHost: function() {

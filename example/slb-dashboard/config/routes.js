@@ -1,5 +1,6 @@
 var http = require('http'),
     async = require('async'),
+    uris = require('./uris');
     util = require('../util/util');
 
 /**
@@ -16,6 +17,10 @@ module.exports = function(app) {
         res.render('index');
     });
 
+    app.get('/dashboard/instances', function(req, res) {
+        res.render('index');
+    });
+
     app.all('/v1/*', function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
@@ -25,7 +30,7 @@ module.exports = function(app) {
 
     // ServicesList API
     app.get('/v1/services', function(req, res) {
-        http.get('http://localhost', function(resp) {
+        http.get(uris.repository, function(resp) {
             var data = [];
 
             resp.on('data', function(chunk) {
@@ -75,7 +80,7 @@ module.exports = function(app) {
                     fwsBody["subEnv"] = "fws";
                     var b = JSON.stringify(fwsBody);
                     var fwsOptions = {
-                        hostname: 'localhost',
+                        hostname: uris.registry.fws,
                         headers: {
                             'Content-Length': Buffer.byteLength(b)
                         }
@@ -106,7 +111,7 @@ module.exports = function(app) {
                 uat: function(cb) {
                     var b = JSON.stringify(body);
                     var uatOptions = {
-                        hostname: 'localhost',
+                        hostname: uris.registry.uat,
                         headers: {
                             'Content-Length': Buffer.byteLength(b)
                         }
@@ -137,7 +142,7 @@ module.exports = function(app) {
                 prod: function(cb) {
                     var b = JSON.stringify(body);
                     var prodOptions = {
-                        hostname: 'localhost',
+                        hostname: uris.registry.prod,
                         headers: {
                             'Content-Length': Buffer.byteLength(b)
                         }
@@ -188,7 +193,7 @@ module.exports = function(app) {
     app.get('/v1/instances', function(req, res) {
         async.parallel({
             fws: function(cb) {
-                http.get('http://etcd.localhost/v2/keys/soa4j/@servers', function(resp) {
+                http.get(uris.etcd.fws, function(resp) {
                     var data = [];
 
                     resp.on('data', function(chunk) {
@@ -211,7 +216,7 @@ module.exports = function(app) {
                 });
             },
             uat: function(cb) {
-                http.get('http://etcd.localhost.com/v2/keys/soa4j/@servers', function(resp) {
+                http.get(uris.etcd.uat, function(resp) {
                     var data = [];
 
                     resp.on('data', function(chunk) {
@@ -229,10 +234,12 @@ module.exports = function(app) {
                         }
                         cb(null, servers);
                     });
+                }).on('error', function(e) {
+                    cb(e, null);
                 });
             },
             prod: function(cb) {
-                http.get('http://localhost.com/v2/keys/soa4j/@servers', function(resp) {
+                http.get(uris.etcd.prod, function(resp) {
                         var data = [];
 
                         resp.on('data', function(chunk) {
@@ -250,6 +257,8 @@ module.exports = function(app) {
                             }
                             cb(null, servers);
                         });
+                }).on('error', function(e) {
+                    cb(e, null);
                 });
             }
         },
@@ -273,18 +282,50 @@ module.exports = function(app) {
     // Drop out one instance
     app.delete('/v1/instance/:env/:ip', function(req, res) {
         var env = req.params.env,
-            ip = req.params.ip;
+            ip = req.params.ip.replace(/_/g, '.');
 
+        var rawBody = {
+            "serverIp": ip,
+            "status": "Down" },
+            body = JSON.stringify(rawBody);
+
+        console.log(uri[env]);
         var options = {
-          uri: '',
-          method: 'PUT',
-          form: {
-            'value': 'Down'
-          }
+            hostname: uris[env],
+            port: 80,
+            method: 'POST',
+            path: '/registry-service/updateserverstatus',
+            headers: {
+                'Content-Type': 'application/bjjson',
+                'Content-Length': Buffer.byteLength(body)
+            }
         };
+        var req = http.request(options, function(resp) {
+            var data = [];
 
-        request(options, function(err, resp, body) {
+            resp.on('data', function(chunk) {
+                data.push(chunk);
+            });
+            resp.on('end', function() {
+                var responseStatus = JSON.parse(data.join('')).responseStatus;
+                console.log(responseStatus);
+                var result = {
+                    'ack': responseStatus.ack
+                };
+                res.writeHead(200, {
+                    'Content-Type': 'application/json'
+                });
+                res.write(JSON.stringify(result));
+                res.end();
+            });
         });
+        req.on('error', function(e) {
+            res.writeHead(500);
+            res.end();
+        });
+        req.write(body);
+        req.end();
+
     });
 
     // Check Health API
@@ -309,6 +350,9 @@ module.exports = function(app) {
                 res.write(JSON.stringify(result));
                 res.end();
             });
+        }).on('error', function(e) {
+          res.writeHead(500);
+          res.end();
         });
     });
 }

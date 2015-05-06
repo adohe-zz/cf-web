@@ -11,7 +11,7 @@ module.run(['$templateCache', function($templateCache) {
     '\n' +
     '  <div class="row">\n' +
     '\n' +
-    '    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">\n' +
+    '    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">\n' +
     '      <div class="panel cf-m-panel cf-fx-box-shadow-heavy">\n' +
     '        <div class="panel-body">\n' +
     '          <div class="ed-p-instances__fws-container">\n' +
@@ -42,7 +42,7 @@ module.run(['$templateCache', function($templateCache) {
     '      </div>\n' +
     '    </div>\n' +
     '\n' +
-    '    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">\n' +
+    '    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">\n' +
     '      <div class="panel cf-m-panel cf-fx-box-shadow-heavy">\n' +
     '        <div class="panel-body">\n' +
     '          <div class="ed-p-instances__fws-container">\n' +
@@ -73,7 +73,7 @@ module.run(['$templateCache', function($templateCache) {
     '      </div>\n' +
     '    </div>\n' +
     '\n' +
-    '    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">\n' +
+    '    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">\n' +
     '      <div class="panel cf-m-panel cf-fx-box-shadow-heavy">\n' +
     '        <div class="panel-body">\n' +
     '          <div class="ed-p-instances__fws-container">\n' +
@@ -154,11 +154,11 @@ module.run(['$templateCache', function($templateCache) {
     '                      </td>\n' +
     '                      <td>\n' +
     '                        <a ng-click="checkHealth(instance)" href="#" class="cf-m-primary-action">\n' +
-    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Check Health</a>\n' +
+    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Check</a>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
     '                        <a ng-click="dropOut(instance)" href="#" class="cf-m-primary-action">\n' +
-    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Drop out</a>\n' +
+    '                        <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Drop</a>\n' +
     '                      </td>\n' +
     '                    </tr>\n' +
     '                  </tbody>\n' +
@@ -517,7 +517,7 @@ angular.module('slb.module')
     },
 
     getDropOutInstancePath: function(env, ip) {
-      return '/' + this.clean(instancePrefix) + '/' + env + '/' + ip.replace(/./g, '_');
+      return '/' + this.clean(instancePrefix) + '/' + env + '/' + ip.replace(/\./g, '_');
     },
 
     getHost: function() {
@@ -579,9 +579,9 @@ angular.module('slb.module')
 
   function dropOut(instance) {
     var ip = instance.url.substring(instance.url.indexOf(':') + 3, instance.url.lastIndexOf(':'));
-    console.log(ip);
-    return $http.delete(pathSvc.getHost() + pathSvc.getDropOutInstancePath(instace.env, ip))
+    return $http.delete(pathSvc.getHost() + pathSvc.getDropOutInstancePath(instance.env, ip))
       .then(function(resp) {
+        return resp.data.ack;
       });
   }
 
@@ -603,6 +603,13 @@ angular.module('slb.module')
     delete: deleteNode
   };
 
+});
+
+'use strict';
+
+angular.module('slb.module').constant('SLB_EVENT', {
+  INSTANCE_DROPOUT: 'slb.instance_dropout',
+  INSTANCE_CHECKIN: 'slb.instance_checkin'
 });
 
 'use strict';
@@ -673,6 +680,7 @@ angular.module('slb.page')
 
   slbApiSvc.fetchServiceInstances(service)
   .then(function(instances) {
+      console.log(instances);
       $scope.instances = instances;
   });
 
@@ -692,7 +700,24 @@ angular.module('slb.page')
   };
 
   $scope.dropOut = function(instance) {
-    console.log('dropout');
+    console.log('drop out');
+    slbApiSvc.dropOut(instance)
+    .then(function(ack) {
+      if(ack === 'Success') {
+        console.log('refresh');
+        $scope.refreshInstances();
+      } else {
+        toastSvc.error("drop out failed");
+      }
+    });
+  };
+
+  $scope.refreshInstances = function() {
+    slbApiSvc.fetchServiceInstances(service)
+    .then(function(instances) {
+      console.log(instances);
+      $scope.instances = instances;
+    });
   };
 });
 

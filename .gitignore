@@ -32,3 +32,4 @@ bower_components
 
 dist/
 example/slb-dashboard/app/cf-web
+example/slb-dashboard/config/uris.js

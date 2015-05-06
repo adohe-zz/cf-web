@@ -14,6 +14,9 @@ angular.module('slb.page')
 
   };
 
+  $scope.checkIn = function(instance) {
+  };
+
   pollerSvc.register('instancesPoller', {
     fn: $scope.fetchInstances,
     scope: $scope,

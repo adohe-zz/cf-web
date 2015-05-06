@@ -50,9 +50,9 @@ angular.module('slb.module')
 
   function dropOut(instance) {
     var ip = instance.url.substring(instance.url.indexOf(':') + 3, instance.url.lastIndexOf(':'));
-    console.log(ip);
-    return $http.delete(pathSvc.getHost() + pathSvc.getDropOutInstancePath(instace.env, ip))
+    return $http.delete(pathSvc.getHost() + pathSvc.getDropOutInstancePath(instance.env, ip))
       .then(function(resp) {
+        return resp.data.ack;
       });
   }
 
