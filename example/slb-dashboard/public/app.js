@@ -120,8 +120,9 @@ module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/page/service/service-info.html',
     '<div class="ed-p-service-info">\n' +
     '\n' +
-    '  <div class="modal-header">\n' +
+    '  <div class="modal-header" complete-promise="requestPromise">\n' +
     '    <h4 class="modal-title">Service Details</h4>\n' +
+    '    <cf-toast></cf-toast>\n' +
     '  </div>\n' +
     '\n' +
     '  <div class="modal-body">\n' +
@@ -149,7 +150,7 @@ module.run(['$templateCache', function($templateCache) {
     '                        <a href="#" ng-bind="instance.url"></a>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
-    '                        <span ng-highlight="instance.env">{{instance.env}}</span>\n' +
+    '                        <span ng-highlight="instance.status">{{instance.status}}</span>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
     '                        <a ng-click="checkHealth(instance)" href="#" class="cf-m-primary-action">\n' +
@@ -227,7 +228,7 @@ module.run(['$templateCache', function($templateCache) {
     '                        <a href="#" ng-bind="instance.url"></a>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
-    '                        <span ng-highlight="instance.env">{{instance.env}}</span>\n' +
+    '                        <span ng-highlight="instance.status">{{instance.status}}</span>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
     '                        <a ng-click="checkHealth(instance)" href="#" class="cf-m-primary-action">\n' +
@@ -515,6 +516,10 @@ angular.module('slb.module')
       return '/' + this.clean(instancePrefix);
     },
 
+    getDropOutInstancePath: function(env, ip) {
+      return '/' + this.clean(instancePrefix) + '/' + env + '/' + ip.replace(/./g, '_');
+    },
+
     getHost: function() {
       return "http://127.0.0.1:8088";
     }
@@ -572,8 +577,12 @@ angular.module('slb.module')
     });
   }
 
-  function dropOut(ip) {
-
+  function dropOut(instance) {
+    var ip = instance.url.substring(instance.url.indexOf(':') + 3, instance.url.lastIndexOf(':'));
+    console.log(ip);
+    return $http.delete(pathSvc.getHost() + pathSvc.getDropOutInstancePath(instace.env, ip))
+      .then(function(resp) {
+      });
   }
 
   return {
@@ -652,7 +661,9 @@ angular.module('slb.page')
 'use strict';
 
 angular.module('slb.page')
-.controller('ServiceInfoCtrl', function($scope, $modalInstance, _, service, slbApiSvc) {
+.controller('ServiceInfoCtrl', function($scope, $modalInstance, _, service, slbApiSvc, toastSvc) {
+
+  $scope.toastSvc = toastSvc;
 
   $scope.service = service;
 
@@ -661,19 +672,23 @@ angular.module('slb.page')
   $scope.identityFn = _.identity;
 
   slbApiSvc.fetchServiceInstances(service)
-        .then(function(instances) {
-          $scope.instances = instances;
-        });
+  .then(function(instances) {
+      $scope.instances = instances;
+  });
 
   $scope.close = function() {
     $modalInstance.dismiss('close');
   };
 
   $scope.checkHealth = function(instance) {
-    slbApiSvc.checkHealth(instance.url).
-          then(function(status) {
-            console.log(status.ack);
-          });
+    slbApiSvc.checkHealth(instance.url)
+    .then(function(status) {
+      if(status.ack === 'Success') {
+        toastSvc.info('service is ok');
+      } else {
+        toastSvc.error('service is not ok');
+      }
+    });
   };
 
   $scope.dropOut = function(instance) {

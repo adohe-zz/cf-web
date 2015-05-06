@@ -1,6 +1,5 @@
 var http = require('http'),
     async = require('async'),
-    request = require('request'),
     util = require('../util/util');
 
 /**

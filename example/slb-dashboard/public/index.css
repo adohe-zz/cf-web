@@ -5759,6 +5759,52 @@ html, body {
       background-color: rgba(33, 33, 33, 0.95);
       color: white; }
 
+.cf-m-table-container {
+  display: block;
+  width: 100%; }
+
+.cf-m-table__constrain-content {
+  max-width: 300px;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; }
+
+.cf-m-table .cf-m-table-selected-row {
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  padding-right: 15px;
+  background-color: #EAF3FF; }
+.cf-m-table .cf-m-table-interact-entire-element:hover {
+  cursor: pointer; }
+
+.cf-m-stacked-cell .cf-m-stacked-cell-secondary, .cf-m-stacked-cell .cf-m-stacked-cell-primary {
+  line-height: 20px; }
+.cf-m-stacked-cell .cf-m-stacked-cell-secondary {
+  color: #999; }
+
+.cf-m-message {
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  -ms-border-radius: 1px;
+  -o-border-radius: 1px;
+  border-radius: 1px;
+  padding: 5px 0px 5px 10px;
+  color: white;
+  font-size: 81%; }
+
+.cf-m-message__close {
+  margin-top: 1px;
+  margin-right: 8px; }
+  .cf-m-message__close:hover {
+    cursor: pointer; }
+
+.cf-m-message--error {
+  background-color: #dd1326; }
+
+.cf-m-message--info {
+  background-color: #2276ad; }
+
 /* FONT PATH
  * -------------------------- */
 @font-face {

@@ -1,0 +1,22 @@
+.cf-m-message {
+  @include border-radius(1px);
+  padding: 5px 0px 5px 10px;
+  color: $white;
+  font-size: 81%;
+}
+
+.cf-m-message__close {
+  margin-top: 1px;
+  margin-right: 8px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.cf-m-message--error {
+  background-color: $color-message-error-bg;
+}
+
+.cf-m-message--info {
+  background-color: $color-message-info-bg;
+}

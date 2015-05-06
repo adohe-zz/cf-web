@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('slb.page')
-.controller('ServiceInfoCtrl', function($scope, $modalInstance, _, service, slbApiSvc) {
+.controller('ServiceInfoCtrl', function($scope, $modalInstance, _, service, slbApiSvc, toastSvc) {
+
+  $scope.toastSvc = toastSvc;
 
   $scope.service = service;
 
@@ -10,19 +12,23 @@ angular.module('slb.page')
   $scope.identityFn = _.identity;
 
   slbApiSvc.fetchServiceInstances(service)
-        .then(function(instances) {
-          $scope.instances = instances;
-        });
+  .then(function(instances) {
+      $scope.instances = instances;
+  });
 
   $scope.close = function() {
     $modalInstance.dismiss('close');
   };
 
   $scope.checkHealth = function(instance) {
-    slbApiSvc.checkHealth(instance.url).
-          then(function(status) {
-            console.log(status.ack);
-          });
+    slbApiSvc.checkHealth(instance.url)
+    .then(function(status) {
+      if(status.ack === 'Success') {
+        toastSvc.info('service is ok');
+      } else {
+        toastSvc.error('service is not ok');
+      }
+    });
   };
 
   $scope.dropOut = function(instance) {
