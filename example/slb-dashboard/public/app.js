@@ -29,10 +29,10 @@ module.run(['$templateCache', function($templateCache) {
     '            <tbody>\n' +
     '              <tr ng-repeat="instance in instances.fws">\n' +
     '                <td>\n' +
-    '                  <a href="#" ng-click="openDetailModal(instance)" ng-bind="instance"></a>\n' +
+    '                  <a href="#" ng-bind="instance.ip"></a>\n' +
     '                </td>\n' +
     '                <td>\n' +
-    '                  <span>Drop out</span>\n' +
+    '                  <a ng-click="checkIn(instance)" href="#" class="cf-m-primary-action">Check In</a>\n' +
     '                </td>\n' +
     '              </tr>\n' +
     '            </tbody>\n' +
@@ -60,10 +60,10 @@ module.run(['$templateCache', function($templateCache) {
     '            <tbody>\n' +
     '              <tr ng-repeat="instance in instances.uat">\n' +
     '                <td>\n' +
-    '                  <a href="#" ng-click="openDetailModal(instance)" ng-bind="instance"></a>\n' +
+    '                  <a href="#" ng-bind="instance.ip"></a>\n' +
     '                </td>\n' +
     '                <td>\n' +
-    '                  <span>Drop out</span>\n' +
+    '                  <a ng-click="checkIn(instance)" href="#" class="cf-m-primary-action">Check In</a>\n' +
     '                </td>\n' +
     '              </tr>\n' +
     '            </tbody>\n' +
@@ -91,10 +91,10 @@ module.run(['$templateCache', function($templateCache) {
     '            <tbody>\n' +
     '              <tr ng-repeat="instance in instances.prod">\n' +
     '                <td>\n' +
-    '                  <a href="#" ng-click="openDetailModal(instance)" ng-bind="instance"></a>\n' +
+    '                  <a href="#" ng-bind="instance.ip"></a>\n' +
     '                </td>\n' +
     '                <td>\n' +
-    '                  <span>Drop out</span>\n' +
+    '                  <a ng-click="checkIn(instance)" href="#" class="cf-m-primary-action">Check In</a>\n' +
     '                </td>\n' +
     '              </tr>\n' +
     '            </tbody>\n' +
@@ -628,6 +628,9 @@ angular.module('slb.page')
 
   };
 
+  $scope.checkIn = function(instance) {
+  };
+
   pollerSvc.register('instancesPoller', {
     fn: $scope.fetchInstances,
     scope: $scope,
@@ -680,7 +683,6 @@ angular.module('slb.page')
 
   slbApiSvc.fetchServiceInstances(service)
   .then(function(instances) {
-      console.log(instances);
       $scope.instances = instances;
   });
 
@@ -700,11 +702,9 @@ angular.module('slb.page')
   };
 
   $scope.dropOut = function(instance) {
-    console.log('drop out');
     slbApiSvc.dropOut(instance)
     .then(function(ack) {
       if(ack === 'Success') {
-        console.log('refresh');
         $scope.refreshInstances();
       } else {
         toastSvc.error("drop out failed");
@@ -715,7 +715,6 @@ angular.module('slb.page')
   $scope.refreshInstances = function() {
     slbApiSvc.fetchServiceInstances(service)
     .then(function(instances) {
-      console.log(instances);
       $scope.instances = instances;
     });
   };

@@ -207,7 +207,10 @@ module.exports = function(app) {
                         var servers = [];
                         for(var i in nodes) {
                             var node = nodes[i];
-                            servers.push(node.key.substring(node.key.lastIndexOf('/') + 1));
+                            servers.push({
+                                "ip": node.key.substring(node.key.lastIndexOf('/') + 1),
+                                "env": "fws"
+                            });
                         }
                         cb(null, servers);
                     });
@@ -230,7 +233,10 @@ module.exports = function(app) {
                         var servers = [];
                         for(var i in nodes) {
                             var node = nodes[i];
-                            servers.push(node.key.substring(node.key.lastIndexOf('/') + 1));
+                            servers.push({
+                                "ip": node.key.substring(node.key.lastIndexOf('/') + 1),
+                                "env": "uat"
+                            });
                         }
                         cb(null, servers);
                     });
@@ -253,7 +259,10 @@ module.exports = function(app) {
                             var servers = [];
                             for(var i in nodes) {
                                 var node = nodes[i];
-                                servers.push(node.key.substring(node.key.lastIndexOf('/') + 1));
+                                servers.push({
+                                    "ip": node.key.substring(node.key.lastIndexOf('/') + 1),
+                                    "env": "prod"
+                                });
                             }
                             cb(null, servers);
                         });

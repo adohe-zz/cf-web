@@ -21,11 +21,10 @@
             <tbody>
               <tr ng-repeat="instance in instances.fws">
                 <td>
-                  <a href="#" ng-click="openDetailModal(instance)" ng-bind="instance"></a>
+                  <a href="#" ng-bind="instance.ip"></a>
                 </td>
                 <td>
-                  <a ng-click="checkIn(instance)" href="#" class="cf-m-primary-action">
-                  <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Check Health</a>
+                  <a ng-click="checkIn(instance)" href="#" class="cf-m-primary-action">Check In</a>
                 </td>
               </tr>
             </tbody>
@@ -53,11 +52,10 @@
             <tbody>
               <tr ng-repeat="instance in instances.uat">
                 <td>
-                  <a href="#" ng-click="openDetailModal(instance)" ng-bind="instance"></a>
+                  <a href="#" ng-bind="instance.ip"></a>
                 </td>
                 <td>
-                  <a ng-click="checkIn(instance)" href="#" class="cf-m-primary-action">
-                  <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Check Health</a>
+                  <a ng-click="checkIn(instance)" href="#" class="cf-m-primary-action">Check In</a>
                 </td>
               </tr>
             </tbody>
@@ -85,11 +83,10 @@
             <tbody>
               <tr ng-repeat="instance in instances.prod">
                 <td>
-                  <a href="#" ng-click="openDetailModal(instance)" ng-bind="instance"></a>
+                  <a href="#" ng-bind="instance.ip"></a>
                 </td>
                 <td>
-                  <a ng-click="checkIn(instance)" href="#" class="cf-m-primary-action">
-                  <cf-svg class="cf-img-icon cf-img-icon-light" src="/cf.svg/icon-add.svg"></cf-svg>Check In</a>
+                  <a ng-click="checkIn(instance)" href="#" class="cf-m-primary-action">Check In</a>
                 </td>
               </tr>
             </tbody>
