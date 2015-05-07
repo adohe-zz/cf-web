@@ -3,9 +3,6 @@
 angular.module('slb.page')
 .controller('ServiceCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc) {
 
-  $scope.currPath = '/';
-  $scope.currNode = null;
-
   $scope.truncateKey = function(key) {
       return pathSvc.tail(key);
   };
@@ -15,10 +12,6 @@ angular.module('slb.page')
       then(function(services) {
         $scope.services = services;
     });
-  };
-
-  $scope.rowClick = function(service) {
-
   };
 
   pollerSvc.register('servicePoller', {

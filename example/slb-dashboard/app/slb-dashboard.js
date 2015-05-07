@@ -66,7 +66,7 @@ slbDashboard.config(function($routeProvider, $locationProvider, $httpProvider,
     .when(path('/service'), {
       controller: 'ServiceCtrl',
       templateUrl: '/page/service/service.html',
-      title: 'Key Service'
+      title: 'Services'
     })
     .when(path('/instances'), {
       controller: 'InstancesCtrl',

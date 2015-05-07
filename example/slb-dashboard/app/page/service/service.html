@@ -20,7 +20,6 @@
               <tbody>
                 <tr ng-repeat="service in services | orderBy:'serviceName' track by service.serviceName"
                 ng-class="ed-m-service-table__node-row"
-                ng-click="rowClick(service)"
                 class="cf-m-table-interact-entire-element">
                 <td>
                   <ed-service-cog service="service"></ed-service-cog>
