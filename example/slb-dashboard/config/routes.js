@@ -32,7 +32,7 @@ module.exports = function(app) {
 
     // ServicesList API
     app.get('/v1/services', function(req, res) {
-        http.get(uris.repository + "te", function(resp) {
+        http.get(uris.repository, function(resp) {
             var data = [];
 
             resp.on('data', function(chunk) {

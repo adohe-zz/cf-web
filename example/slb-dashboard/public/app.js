@@ -121,7 +121,7 @@ module.run(['$templateCache', function($templateCache) {
   $templateCache.put('/page/service/service-info.html',
     '<div class="ed-p-service-info">\n' +
     '\n' +
-    '  <div class="modal-header" complete-promise="requestPromise">\n' +
+    '  <div class="modal-header">\n' +
     '    <h4 class="modal-title">Service Details</h4>\n' +
     '    <cf-toast></cf-toast>\n' +
     '  </div>\n' +
@@ -287,7 +287,6 @@ module.run(['$templateCache', function($templateCache) {
     '              <tbody>\n' +
     '                <tr ng-repeat="service in services | orderBy:\'serviceName\' track by service.serviceName"\n' +
     '                ng-class="ed-m-service-table__node-row"\n' +
-    '                ng-click="rowClick(service)"\n' +
     '                class="cf-m-table-interact-entire-element">\n' +
     '                <td>\n' +
     '                  <ed-service-cog service="service"></ed-service-cog>\n' +
@@ -402,7 +401,7 @@ slbDashboard.config(function($routeProvider, $locationProvider, $httpProvider,
     .when(path('/service'), {
       controller: 'ServiceCtrl',
       templateUrl: '/page/service/service.html',
-      title: 'Key Service'
+      title: 'Services'
     })
     .when(path('/instances'), {
       controller: 'InstancesCtrl',
@@ -533,15 +532,6 @@ angular.module('slb.module')
 angular.module('slb.module')
 .factory('slbApiSvc', function($http, $q, $, _, pathSvc) {
 
-  function createNode(node) {
-  }
-
-  function saveNode(node) {
-  }
-
-  function deleteNode(node) {
-  }
-
   function fetchServicesList() {
     return $http.get(pathSvc.getHost() + pathSvc.getServicesListPath(), {
       supressNotifications: true
@@ -607,13 +597,7 @@ angular.module('slb.module')
 
     dropOut: dropOut,
 
-    checkIn: checkIn,
-
-    create: createNode,
-
-    save: saveNode,
-
-    delete: deleteNode
+    checkIn: checkIn
   };
 
 });
@@ -671,24 +655,19 @@ angular.module('slb.page')
 'use strict';
 
 angular.module('slb.page')
-.controller('ServiceCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc) {
-
-  $scope.currPath = '/';
-  $scope.currNode = null;
+.controller('ServiceCtrl', function($scope, $rootScope, slbApiSvc, pollerSvc, pathSvc, CF_EVENT) {
 
   $scope.truncateKey = function(key) {
       return pathSvc.tail(key);
   };
 
   $scope.fetchService = function() {
-    return slbApiSvc.fetchServicesList().
-      then(function(services) {
+    return slbApiSvc.fetchServicesList()
+    .then(function(services) {
         $scope.services = services;
+    }, function(reason) {
+        $rootScope.$broadcast(CF_EVENT.POLL_ERROR);
     });
-  };
-
-  $scope.rowClick = function(service) {
-
   };
 
   pollerSvc.register('servicePoller', {
@@ -721,7 +700,7 @@ angular.module('slb.page')
   };
 
   $scope.checkHealth = function(instance) {
-    slbApiSvc.checkHealth(instance.url)
+    return slbApiSvc.checkHealth(instance.url)
     .then(function(status) {
       if(status.ack === 'Success') {
         toastSvc.info('service is ok');
@@ -732,7 +711,7 @@ angular.module('slb.page')
   };
 
   $scope.dropOut = function(instance) {
-    slbApiSvc.dropOut(instance)
+    return slbApiSvc.dropOut(instance)
     .then(function(ack) {
       if(ack === 'Success') {
         console.log('refresh');
@@ -759,8 +738,7 @@ angular.module('slb.page')
 'use strict';
 
 angular.module('slb.ui')
-.directive('edServiceCog', function($modal, $rootScope, slbApiSvc,
-      CF_EVENT) {
+.directive('edServiceCog', function($modal, $rootScope) {
 
   return {
     templateUrl: '/page/service-cog.html',
