@@ -78,7 +78,6 @@ module.exports = function(app) {
             };
             async.parallel({
                 fws: function(cb) {
-                    console.log('fetch fws instances');
                     var fwsBody = body;
                     fwsBody["subEnv"] = "fws";
                     var b = JSON.stringify(fwsBody);
@@ -102,7 +101,6 @@ module.exports = function(app) {
                             for(var i in instances) {
                               instances[i]["env"] = "fws";
                             }
-                            console.log(instances);
                             cb(null, instances);
                         });
                     });
@@ -113,7 +111,6 @@ module.exports = function(app) {
                     req.end();
                 },
                 uat: function(cb) {
-                    console.log('fetch uat instance');
                     var b = JSON.stringify(body);
                     var uatOptions = {
                         hostname: uris.registry.uat,
@@ -135,7 +132,6 @@ module.exports = function(app) {
                             for(var i in instances) {
                               instances[i]["env"] = "uat";
                             }
-                            console.log(instances);
                             cb(null, instances);
                         });
                     });
@@ -368,8 +364,6 @@ module.exports = function(app) {
             });
             resp.on('end', function() {
                 var responseStatus = JSON.parse(data.join('')).responseStatus;
-                console.log('drop out');
-                console.log(responseStatus);
                 var result = {
                     'ack': responseStatus.ack
                 };

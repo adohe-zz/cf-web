@@ -684,10 +684,6 @@ angular.module('slb.page')
 
   $scope.service = service;
 
-  $scope.objectKeys = _.without(_.keys(service), 'endpointList');
-
-  $scope.identityFn = _.identity;
-
   slbApiSvc.fetchServiceInstances(service)
   .then(function(instances) {
       $scope.instances = instances;
@@ -698,6 +694,10 @@ angular.module('slb.page')
   };
 
   $scope.checkHealth = function(instance) {
+    if(instance.status === 'Down') {
+      toastSvc.error('the service is down already');
+      return;
+    }
     return slbApiSvc.checkHealth(instance.url)
     .then(function(status) {
       if(status.ack === 'Success') {
@@ -712,7 +712,6 @@ angular.module('slb.page')
     return slbApiSvc.dropOut(instance)
     .then(function(ack) {
       if(ack === 'Success') {
-        console.log('refresh');
         $scope.refreshInstances();
       } else {
         toastSvc.error("drop out failed");
@@ -727,7 +726,6 @@ angular.module('slb.page')
   $scope.fetchInstances = function() {
     return slbApiSvc.fetchServiceInstances(service)
     .then(function(instances) {
-      console.log(instances);
       $scope.instances = instances;
     });
   };
