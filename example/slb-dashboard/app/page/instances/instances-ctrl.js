@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('slb.page')
-.controller('InstancesCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc, toastSvc) {
+.controller('InstancesCtrl', function($scope, $rootScope, slbApiSvc, pollerSvc, pathSvc, toastSvc,
+        CF_EVENT) {
 
   $scope.toastSvc = toastSvc;
 
@@ -9,29 +10,26 @@ angular.module('slb.page')
     return slbApiSvc.fetchInstances().
       then(function(instances) {
         $scope.instances = instances;
+    }, function(reason) {
+        $rootScope.$broadcast(CF_EVENT.POLL_ERROR);
     });
   };
 
-  $scope.rowClick = function(instances) {
-
-  };
-
   $scope.checkIn = function(instance) {
-    slbApiSvc.checkIn(instance)
-      .then(function(ack) {
-        if(ack === 'Success') {
-          $scope.refreshInstances();
-        } else {
-          toastSvc.error('request error');
-        }
-      });
+    return slbApiSvc.checkIn(instance)
+    .then(function(ack) {
+      if(ack === 'Success') {
+        $scope.refreshInstances();
+      } else {
+        toastSvc.error('update server status ack failure');
+      }
+    }, function(reason) {
+        toastSvc.error('request error');
+    });
   };
 
   $scope.refreshInstances = function() {
-      slbApiSvc.fetchInstances()
-        .then(function(instances) {
-          $scope.instances = instances;
-        });
+    $scope.fetchInstances();
   };
 
   pollerSvc.register('instancesPoller', {

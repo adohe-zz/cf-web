@@ -46,7 +46,7 @@ module.run(['$templateCache', function($templateCache) {
     '    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">\n' +
     '      <div class="panel cf-m-panel cf-fx-box-shadow-heavy">\n' +
     '        <div class="panel-body">\n' +
-    '          <div class="ed-p-instances__fws-container">\n' +
+    '          <div class="ed-p-instances__uat-container">\n' +
     '            <h2>UAT</h2>\n' +
     '          </div>\n' +
     '\n' +
@@ -77,7 +77,7 @@ module.run(['$templateCache', function($templateCache) {
     '    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">\n' +
     '      <div class="panel cf-m-panel cf-fx-box-shadow-heavy">\n' +
     '        <div class="panel-body">\n' +
-    '          <div class="ed-p-instances__fws-container">\n' +
+    '          <div class="ed-p-instances__prod-container">\n' +
     '            <h2>PROD</h2>\n' +
     '          </div>\n' +
     '\n' +
@@ -612,7 +612,8 @@ angular.module('slb.module').constant('SLB_EVENT', {
 'use strict';
 
 angular.module('slb.page')
-.controller('InstancesCtrl', function($scope, $modal, slbApiSvc, pollerSvc, pathSvc, toastSvc) {
+.controller('InstancesCtrl', function($scope, $rootScope, slbApiSvc, pollerSvc, pathSvc, toastSvc,
+        CF_EVENT) {
 
   $scope.toastSvc = toastSvc;
 
@@ -620,29 +621,26 @@ angular.module('slb.page')
     return slbApiSvc.fetchInstances().
       then(function(instances) {
         $scope.instances = instances;
+    }, function(reason) {
+        $rootScope.$broadcast(CF_EVENT.POLL_ERROR);
     });
   };
 
-  $scope.rowClick = function(instances) {
-
-  };
-
   $scope.checkIn = function(instance) {
-    slbApiSvc.checkIn(instance)
-      .then(function(ack) {
-        if(ack === 'Success') {
-          $scope.refreshInstances();
-        } else {
-          toastSvc.error('request error');
-        }
-      });
+    return slbApiSvc.checkIn(instance)
+    .then(function(ack) {
+      if(ack === 'Success') {
+        $scope.refreshInstances();
+      } else {
+        toastSvc.error('update server status ack failure');
+      }
+    }, function(reason) {
+        toastSvc.error('request error');
+    });
   };
 
   $scope.refreshInstances = function() {
-      slbApiSvc.fetchInstances()
-        .then(function(instances) {
-          $scope.instances = instances;
-        });
+    $scope.fetchInstances();
   };
 
   pollerSvc.register('instancesPoller', {
