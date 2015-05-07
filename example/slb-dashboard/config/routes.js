@@ -13,10 +13,12 @@ module.exports = function(app) {
         res.render('index');
     });
 
+    // service page
     app.get('/dashboard/service', function(req, res) {
         res.render('index');
     });
 
+    // instances page
     app.get('/dashboard/instances', function(req, res) {
         res.render('index');
     });
@@ -30,7 +32,7 @@ module.exports = function(app) {
 
     // ServicesList API
     app.get('/v1/services', function(req, res) {
-        http.get(uris.repository, function(resp) {
+        http.get(uris.repository + "te", function(resp) {
             var data = [];
 
             resp.on('data', function(chunk) {

@@ -21,7 +21,7 @@ angular.module('slb.page')
   };
 
   $scope.checkHealth = function(instance) {
-    slbApiSvc.checkHealth(instance.url)
+    return slbApiSvc.checkHealth(instance.url)
     .then(function(status) {
       if(status.ack === 'Success') {
         toastSvc.info('service is ok');
@@ -32,7 +32,7 @@ angular.module('slb.page')
   };
 
   $scope.dropOut = function(instance) {
-    slbApiSvc.dropOut(instance)
+    return slbApiSvc.dropOut(instance)
     .then(function(ack) {
       if(ack === 'Success') {
         console.log('refresh');

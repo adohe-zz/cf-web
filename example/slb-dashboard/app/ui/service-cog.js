@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('slb.ui')
-.directive('edServiceCog', function($modal, $rootScope, slbApiSvc,
-      CF_EVENT) {
+.directive('edServiceCog', function($modal, $rootScope) {
 
   return {
     templateUrl: '/page/service-cog.html',

@@ -3,15 +3,6 @@
 angular.module('slb.module')
 .factory('slbApiSvc', function($http, $q, $, _, pathSvc) {
 
-  function createNode(node) {
-  }
-
-  function saveNode(node) {
-  }
-
-  function deleteNode(node) {
-  }
-
   function fetchServicesList() {
     return $http.get(pathSvc.getHost() + pathSvc.getServicesListPath(), {
       supressNotifications: true
@@ -77,13 +68,7 @@ angular.module('slb.module')
 
     dropOut: dropOut,
 
-    checkIn: checkIn,
-
-    create: createNode,
-
-    save: saveNode,
-
-    delete: deleteNode
+    checkIn: checkIn
   };
 
 });
