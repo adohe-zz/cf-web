@@ -11,7 +11,7 @@ angular.module('cf.ui')
     restrict: 'A',
     link: function(scope, elem, attrs) {
 
-      scope.$watch(attrs.coHighlight, function(newValue, oldValue) {
+      scope.$watch(attrs.cfHighlight, function(newValue, oldValue) {
         if (newValue !== oldValue) {
           highlighterSvc.highlight(elem);
         }

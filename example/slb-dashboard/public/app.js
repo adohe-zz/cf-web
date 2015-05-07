@@ -151,7 +151,7 @@ module.run(['$templateCache', function($templateCache) {
     '                        <a href="#" ng-bind="instance.url"></a>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
-    '                        <span ng-highlight="instance.status">{{instance.status}}</span>\n' +
+    '                        <span cf-highlight="instance.status">{{instance.status}}</span>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
     '                        <a ng-click="checkHealth(instance)" href="#" class="cf-m-primary-action">\n' +
@@ -190,7 +190,7 @@ module.run(['$templateCache', function($templateCache) {
     '                        <a href="#" ng-bind="instance.url"></a>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
-    '                        <span ng-highlight="instance.status">{{instance.status}}</span>\n' +
+    '                        <span cf-highlight="instance.status">{{instance.status}}</span>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
     '                        <a ng-click="checkHealth(instance)" href="#" class="cf-m-primary-action">\n' +
@@ -229,7 +229,7 @@ module.run(['$templateCache', function($templateCache) {
     '                        <a href="#" ng-bind="instance.url"></a>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
-    '                        <span ng-highlight="instance.status">{{instance.status}}</span>\n' +
+    '                        <span cf-highlight="instance.status">{{instance.status}}</span>\n' +
     '                      </td>\n' +
     '                      <td>\n' +
     '                        <a ng-click="checkHealth(instance)" href="#" class="cf-m-primary-action">\n' +
