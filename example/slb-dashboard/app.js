@@ -2,7 +2,7 @@ var express = require('express'),
     config = require('config');
 
 var app = express();
-var port = process.env.PORT || 8088;
+var port = process.env.PORT || 8082;
 
 // Bootstrap application settings
 require('./config/express')(app, config);

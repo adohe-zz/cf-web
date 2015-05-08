@@ -42,6 +42,20 @@ angular.module('slb.page')
     });
   };
 
+  $scope.checkIn = function(instance) {
+    instance.ip = instance.url.substring(instance.url.indexOf('/') + 2, instance.url.lastIndexOf(':'));
+    return slbApiSvc.checkIn(instance)
+    .then(function(ack) {
+      if(ack === 'Success') {
+        $scope.refreshInstances();
+      } else {
+        toastSvc.error('update server status ack failure');
+      }
+    }, function(reason) {
+        toastSvc.error('request error');
+    });
+  };
+
   $scope.refreshInstances = function() {
     $scope.fetchInstances();
   };

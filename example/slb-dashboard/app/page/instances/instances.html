@@ -20,69 +20,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="instance in instances.fws">
-                <td>
-                  <a href="#" ng-bind="instance.ip"></a>
-                </td>
-                <td>
-                  <a ng-click="checkIn(instance)" href="#" class="cf-m-primary-action">Check In</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-      <div class="panel cf-m-panel cf-fx-box-shadow-heavy">
-        <div class="panel-body">
-          <div class="ed-p-instances__uat-container">
-            <h2>UAT</h2>
-          </div>
-
-          <h2>Instances</h2>
-          <table class="table cf-m-table ed-m-instance-table">
-            <thead>
-              <tr>
-                <th class="ed-m-instance-table__ip-col">IP</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="instance in instances.uat">
-                <td>
-                  <a href="#" ng-bind="instance.ip"></a>
-                </td>
-                <td>
-                  <a ng-click="checkIn(instance)" href="#" class="cf-m-primary-action">Check In</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-      <div class="panel cf-m-panel cf-fx-box-shadow-heavy">
-        <div class="panel-body">
-          <div class="ed-p-instances__prod-container">
-            <h2>PROD</h2>
-          </div>
-
-          <h2>Instances</h2>
-          <table class="table cf-m-table ed-m-instance-table">
-            <thead>
-              <tr>
-                <th class="ed-m-instance-table__ip-col">IP</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="instance in instances.prod">
+              <tr ng-repeat="instance in instances">
                 <td>
                   <a href="#" ng-bind="instance.ip"></a>
                 </td>

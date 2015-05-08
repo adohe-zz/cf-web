@@ -3,6 +3,7 @@ var http = require('http'),
     uris = require('./uris');
     util = require('../util/util');
 
+var env = process.env.NODE_ENV || 'fws';
 /**
  * Expose
  */
@@ -32,7 +33,7 @@ module.exports = function(app) {
 
     // ServicesList API
     app.get('/v1/services', function(req, res) {
-        http.get(uris.repository, function(resp) {
+        http.get(uris.repository[env], function(resp) {
             var data = [];
 
             resp.on('data', function(chunk) {
@@ -68,232 +69,88 @@ module.exports = function(app) {
             res.writeHead(500);
             res.end();
         } else {
+            if(env === 'fws') {
+                body["subEnv"] = "fws";
+            }
+            var b = JSON.stringify(body);
             var options = {
+                hostname: uris.registry[env],
                 port: 80,
                 path: '/registry-service/getserviceinstances',
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/bjjson'
+                    'Content-Type': 'application/bjjson',
+                    'Content-Length': Buffer.byteLength(b)
                 }
             };
-            async.parallel({
-                fws: function(cb) {
-                    var fwsBody = body;
-                    fwsBody["subEnv"] = "fws";
-                    var b = JSON.stringify(fwsBody);
-                    var fwsOptions = {
-                        hostname: uris.registry.fws,
-                        headers: {
-                            'Content-Length': Buffer.byteLength(b)
-                        }
-                    };
-                    var req = http.request(util.merge(fwsOptions, options), function(resp) {
-                        var data = [];
+            var req = http.request(options, function(resp) {
+                var data = [];
 
-                        resp.on('data', function(chunk) {
-                            data.push(chunk);
-                        });
-                        resp.on('end', function() {
-                            var instances = JSON.parse(data.join('')).instances;
-                            if(instances === undefined) {
-                                instances = [];
-                            }
-                            for(var i in instances) {
-                              instances[i]["env"] = "fws";
-                            }
-                            cb(null, instances);
-                        });
-                    });
-                    req.on('error', function(e) {
-                        cb(e, null);
-                    });
-                    req.write(b);
-                    req.end();
-                },
-                uat: function(cb) {
-                    var b = JSON.stringify(body);
-                    var uatOptions = {
-                        hostname: uris.registry.uat,
-                        headers: {
-                            'Content-Length': Buffer.byteLength(b)
-                        }
-                    };
-                    var req = http.request(util.merge(uatOptions, options), function(resp) {
-                        var data = [];
-
-                        resp.on('data', function(chunk) {
-                            data.push(chunk);
-                        });
-                        resp.on('end', function() {
-                            var instances = JSON.parse(data.join('')).instances;
-                            if(instances === undefined) {
-                                instances = [];
-                            }
-                            for(var i in instances) {
-                              instances[i]["env"] = "uat";
-                            }
-                            cb(null, instances);
-                        });
-                    });
-                    req.on('error', function(e) {
-                        cb(e, null);
-                    });
-                    req.write(b);
-                    req.end();
-                },
-                prod: function(cb) {
-                    var b = JSON.stringify(body);
-                    var prodOptions = {
-                        hostname: uris.registry.prod,
-                        headers: {
-                            'Content-Length': Buffer.byteLength(b)
-                        }
-                    };
-                    var req = http.request(util.merge(prodOptions, options), function(resp) {
-                        var data = [];
-
-                        resp.on('data', function(chunk) {
-                            data.push(chunk);
-                        });
-                        resp.on('end', function() {
-                            var instances = JSON.parse(data.join('')).instances;
-                            if(instances === undefined) {
-                                instances = [];
-                            }
-                            for(var i in instances) {
-                              instances[i]["env"] = "prod";
-                            }
-                            cb(null, instances);
-                        });
-                    });
-                    req.on('error', function(e) {
-                        cb(e, null);
-                    });
-                    req.write(b);
-                    req.end();
-                }
-            },
-            function(err, results) {
-                if(err) {
-                    res.writeHead(500);
-                    res.end();
-                } else {
-                    var resBody = {
-                        'instances': results
+                resp.on('data', function(chunk) {
+                    data.push(chunk);
+                });
+                resp.on('end', function() {
+                    var instances = JSON.parse(data.join('')).instances;
+                    if(instances === undefined) {
+                        instances = [];
+                    }
+                    var result = {
+                        "instances": instances
                     };
                     res.writeHead(200, {
                         'Content-Type': 'application/json'
                     });
-                    res.write(JSON.stringify(resBody));
+                    res.write(JSON.stringify(result));
                     res.end();
-                }
+                });
             });
+            req.on('error', function(e) {
+                res.writeHead(500);
+                res.end();
+            });
+            req.write(b);
+            req.end();
         }
     });
 
     // Instances List API
     app.get('/v1/instances', function(req, res) {
-        async.parallel({
-            fws: function(cb) {
-                http.get(uris.etcd.fws, function(resp) {
-                    var data = [];
+        http.get(uris.etcd[env], function(resp) {
+            var data = [];
 
-                    resp.on('data', function(chunk) {
-                        data.push(chunk);
+            resp.on('data', function(chunk) {
+                data.push(chunk);
+            });
+            resp.on('end', function() {
+                var nodes = JSON.parse(data.join('')).node.nodes;
+                if(nodes === undefined) {
+                    nodes = [];
+                }
+                var servers = [];
+                for(var i in nodes) {
+                    var node = nodes[i];
+                    servers.push({
+                        "ip": node.key.substring(node.key.lastIndexOf('/') + 1)
                     });
-                    resp.on('end', function() {
-                        var nodes = JSON.parse(data.join('')).node.nodes;
-                        if(nodes === undefined) {
-                            nodes = [];
-                        }
-                        var servers = [];
-                        for(var i in nodes) {
-                            var node = nodes[i];
-                            servers.push({
-                                "ip": node.key.substring(node.key.lastIndexOf('/') + 1),
-                                "env": "fws"
-                            });
-                        }
-                        cb(null, servers);
-                    });
-                }).on('error', function(e) {
-                    cb(e, null)
-                });
-            },
-            uat: function(cb) {
-                http.get(uris.etcd.uat, function(resp) {
-                    var data = [];
-
-                    resp.on('data', function(chunk) {
-                        data.push(chunk);
-                    });
-                    resp.on('end', function() {
-                        var nodes = JSON.parse(data.join('')).node.nodes;
-                        if(nodes === undefined) {
-                            nodes = [];
-                        }
-                        var servers = [];
-                        for(var i in nodes) {
-                            var node = nodes[i];
-                            servers.push({
-                                "ip": node.key.substring(node.key.lastIndexOf('/') + 1),
-                                "env": "uat"
-                            });
-                        }
-                        cb(null, servers);
-                    });
-                }).on('error', function(e) {
-                    cb(e, null);
-                });
-            },
-            prod: function(cb) {
-                http.get(uris.etcd.prod, function(resp) {
-                        var data = [];
-
-                        resp.on('data', function(chunk) {
-                            data.push(chunk);
-                        });
-                        resp.on('end', function() {
-                            var nodes = JSON.parse(data.join('')).node.nodes;
-                            if(nodes === undefined) {
-                                nodes = [];
-                            }
-                            var servers = [];
-                            for(var i in nodes) {
-                                var node = nodes[i];
-                                servers.push({
-                                    "ip": node.key.substring(node.key.lastIndexOf('/') + 1),
-                                    "env": "prod"
-                                });
-                            }
-                            cb(null, servers);
-                        });
-                }).on('error', function(e) {
-                    cb(e, null);
-                });
-            }
-        },
-        function(e, results) {
-            if(e) {
-                res.writeHead(500);
-                res.end();
-            } else {
-                var resBody = {
-                    'instances': results
+                }
+                var respBody = {
+                    "instances": servers
                 };
                 res.writeHead(200, {
                     'Content-Type': 'application/json'
                 });
-                res.write(JSON.stringify(resBody));
+                res.write(JSON.stringify(respBody));
                 res.end();
-            }
+            });
+        }).on('error', function(e) {
+            res.writeHead(500);
+            res.end();
         });
     });
 
     // Check in on instance API
     app.put('/v1/instance/', function(req, res) {
-        var ip = req.body.ip,
-            env = req.body.env;
+        var ip = req.body.ip;
 
         var rawBody = {
             "serverIp": ip,
@@ -337,9 +194,8 @@ module.exports = function(app) {
     });
 
     // Drop out one instance API
-    app.delete('/v1/instance/:env/:ip', function(req, res) {
-        var env = req.params.env,
-            ip = req.params.ip.replace(/_/g, '.');
+    app.delete('/v1/instance/:ip', function(req, res) {
+        var ip = req.params.ip.replace(/_/g, '.');
 
         var rawBody = {
             "serverIp": ip,

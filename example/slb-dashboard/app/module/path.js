@@ -74,12 +74,12 @@ angular.module('slb.module')
       return '/' + this.clean(instancePrefix);
     },
 
-    getDropOutInstancePath: function(env, ip) {
-      return '/' + this.clean(instancePrefix) + '/' + env + '/' + ip.replace(/\./g, '_');
+    getDropOutInstancePath: function(ip) {
+      return '/' + this.clean(instancePrefix) +  '/' + ip.replace(/\./g, '_');
     },
 
     getHost: function() {
-      return "http://127.0.0.1:8088";
+      return "http://localhost:8082";
     }
   };
 

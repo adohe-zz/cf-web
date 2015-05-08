@@ -41,7 +41,7 @@ angular.module('slb.module')
 
   function dropOut(instance) {
     var ip = instance.url.substring(instance.url.indexOf(':') + 3, instance.url.lastIndexOf(':'));
-    return $http.delete(pathSvc.getHost() + pathSvc.getDropOutInstancePath(instance.env, ip))
+    return $http.delete(pathSvc.getHost() + pathSvc.getDropOutInstancePath(ip))
       .then(function(resp) {
         return resp.data.ack;
       });
@@ -49,8 +49,7 @@ angular.module('slb.module')
 
   function checkIn(instance) {
     return $http.put(pathSvc.getHost() + pathSvc.getInstancePath(), {
-      ip: instance.ip,
-      env: instance.env
+      ip: instance.ip
     })
     .then(function(resp) {
       return resp.data.ack;
