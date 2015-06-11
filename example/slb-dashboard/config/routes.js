@@ -1,9 +1,13 @@
 var http = require('http'),
     async = require('async'),
     uris = require('./uris');
-    util = require('../util/util');
+    util = require('../util/util'),
+    auth = require('./middlewares/authorization');
 
 var env = process.env.NODE_ENV || 'fws';
+
+var serviceAuth = [auth.requiresLogin, auth.service.hasAuthorization];
+
 /**
  * Expose
  */
@@ -149,7 +153,7 @@ module.exports = function(app) {
     });
 
     // Check in on instance API
-    app.put('/v1/instance/', function(req, res) {
+    app.put('/v1/instance/', serviceAuth, function(req, res) {
         var ip = req.body.ip;
 
         var rawBody = {
@@ -194,7 +198,7 @@ module.exports = function(app) {
     });
 
     // Drop out one instance API
-    app.delete('/v1/instance/:ip', function(req, res) {
+    app.delete('/v1/instance/:ip', serviceAuth, function(req, res) {
         var ip = req.params.ip.replace(/_/g, '.');
 
         var rawBody = {
