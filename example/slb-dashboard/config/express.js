@@ -2,6 +2,8 @@ var express = require('express'),
     compression = require('compression'),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
+    cookieParser = require('cookie-parser'),
+    cookieSession = require('cookie-session'),
     multer = require('multer'),
     swig = require('swig');
 
@@ -40,4 +42,8 @@ module.exports = function(app, config) {
             return method;
         }
     }));
+
+    // cookieParser should be above session
+    app.use(cookieParser());
+    app.use(cookieSession({ secret: 'secret' }));
 }
