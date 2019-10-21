@@ -20,7 +20,7 @@
     "cookie-session": "1.0.2",
     "multer": "0.1.4",
     "swig": "1.4.2",
-    "request": "2.55.0",
+    "request": "2.88.0",
     "passport": "0.2.1",
     "passport-github": "0.1.5"
   },
